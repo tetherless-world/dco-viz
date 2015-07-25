@@ -1,6 +1,39 @@
 <?php
-    $json = trim(file_get_contents("users.json"));
-    global $json ;
+//    $json = trim(file_get_contents("users.json"));
+//    global $json ;
+
+$ptr = new mysqli("localhost", "dbdump", "Sm8!6MeuRK", "dco_user");
+
+/* check connection */
+if ($ptr->connect_errno) {
+    printf("Connect failed: %s\n", $ptr->connect_error);
+    exit();
+}
+
+$sql = "select date_format(date(actedOn),\"%Y,%m,%d\") as date, count(hashid) as number from REQUESTINFO WHERE status = \"ACCEPTED\" AND actedOn is not null GROUP BY date(actedOn) ORDER BY actedOn;" ;
+
+$json = "[\n" ;
+$isfirst = true ;
+if ($result = $ptr->query($sql))
+{
+    while($obj = $result->fetch_object())
+    {
+        $d = $obj->date ;
+        $darr = explode( ",", $d ) ;
+        $y = $darr[0] ;
+        $m = $darr[1]-1 ;
+        $d = $darr[2] ;
+        $n = $obj->number ;
+        if( !$isfirst ) $json .= ",\n" ;
+        $isfirst = false ;
+        $json .= "[Date.UTC($y,$m,$d),$n]" ;
+
+    }
+}
+$json .= "\n]" ;
+print( $json ) ;
+
+$ptr->close();
 ?>
 
 <html>
