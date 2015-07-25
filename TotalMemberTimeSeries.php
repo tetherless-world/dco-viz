@@ -1,7 +1,4 @@
 <?php
-//    $json = trim(file_get_contents("users.json"));
-//    global $json ;
-
 $ptr = new mysqli("localhost", "dbdump", "Sm8!6MeuRK", "dco_user");
 
 /* check connection */
@@ -31,7 +28,6 @@ if ($result = $ptr->query($sql))
     }
 }
 $json .= "\n]" ;
-print( $json ) ;
 
 $ptr->close();
 ?>

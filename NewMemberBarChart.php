@@ -1,3 +1,56 @@
+<?php
+
+$ptr = new mysqli("localhost", "dbdump", "Sm8!6MeuRK", "dco_user");
+
+/* check connection */
+if ($ptr->connect_errno) {
+    printf("Connect failed: %s\n", $ptr->connect_error);
+    exit();
+}
+
+$sql = "select count(hashid) as count from REQUESTINFO where status = \"ACCEPTED\" AND actedOn > DATE_SUB(NOW(),INTERVAL 6 MONTH);" ;
+
+$n6m = 0 ;
+if ($result = $ptr->query($sql))
+{
+    $obj = $result->fetch_object() ;
+    $n6m = $obj->count ;
+}
+global $n6m ;
+
+$sql = "select count(hashid) as count from REQUESTINFO where status = \"ACCEPTED\" AND actedOn > DATE_SUB(NOW(),INTERVAL 2 MONTH);" ;
+
+$n2m = 0 ;
+if ($result = $ptr->query($sql))
+{
+    $obj = $result->fetch_object() ;
+    $n2m = $obj->count ;
+}
+global $n2m ;
+
+$sql = "select count(hashid) as count from REQUESTINFO where status = \"ACCEPTED\" AND actedOn > DATE_SUB(NOW(),INTERVAL 1 MONTH);" ;
+
+$n1m = 0 ;
+if ($result = $ptr->query($sql))
+{
+    $obj = $result->fetch_object() ;
+    $n1m = $obj->count ;
+}
+global $n1m ;
+
+$sql = "select count(hashid) as count from REQUESTINFO where status = \"ACCEPTED\" AND actedOn > DATE_SUB(NOW(),INTERVAL 1 WEEK);" ;
+
+$n1w = 0 ;
+if ($result = $ptr->query($sql))
+{
+    $obj = $result->fetch_object() ;
+    $n1w = $obj->count ;
+}
+global $n1w ;
+
+$ptr->close();
+?>
+
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -65,16 +118,16 @@ $(function () {
         },
         series: [{
             name: '6 months',
-            data: [309]
+            data: [<?=$n6m?>]
         }, {
             name: '2 months',
-            data: [40]
+            data: [<?=$n2m?>]
         }, {
             name: '1 month',
-            data: [9]
+            data: [<?=$n1m?>]
         }, {
             name: '1 week',
-            data: [2]
+            data: [<?=$n1w?>]
         }]
     });
 });
