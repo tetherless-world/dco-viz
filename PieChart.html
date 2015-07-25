@@ -2,6 +2,8 @@
 <head></head>
 <body>
 
+<button id="moreInfo">More Information</button>
+
 <div id="pieChart"></div>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script> 
@@ -14,9 +16,41 @@
 //Displays a pie chart showing DCO members sorted by affiliated DCO community
 //Uses D3 and sample code from d3pie.org
 //Author Stephen Moon
-//Version 7/23/2015
+//Version 7/24/2015
 
 var commNumbers = [];
+var commNames = [];
+var publicationCounts = [];
+
+moreInfo.onclick = function()
+{
+	var segment = pie.getOpenSegment();
+	if(segment === null)
+	{
+		alert("Please click on a piece of the pie, then re-click the button.");
+	}
+	else
+	{
+		var i = segment.data.num;
+		var name = commNames[i];
+		var members = segment.data.value;
+		alert("The " + name + " has " + members + " members and " + publicationCounts[i] + " publications." );
+	}
+};
+
+function openURL(link)
+{
+$.ajax({
+	dataType: "json",
+	url: link,
+	success: function(data) {
+	for(var i = 0; i < data.results.bindings.length; i++)
+	{
+		publicationCounts.push(parseInt(data.results.bindings[i].number.value));
+	}
+	}
+	});
+}
 
 $.ajax({ 
 	dataType: "json",
@@ -25,18 +59,25 @@ $.ajax({
 		for(var i = 0; i < data.results.bindings.length; i++)
 		{
 			updateNumbers(parseInt(data.results.bindings[i].number.value));
+			updateNames(data.results.bindings[i].dcocommname.value);
 		}
 
-		var pie = generateChart(commNumbers);
-
+		pie = generateChart(commNumbers);
+		//Opens the publication count first and stores results in publicationCounts
+		openURL("https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+bibo%3A+%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E%0D%0A%0D%0A%23%0D%0A%23Counts+the+number+of+publications+on+the+DCO+website%0D%0A%23Sorts+the+publications+by+DCO+community%0D%0A%23%0D%0ASELECT+%3Fdcocommname+%28COUNT%28%3Fpublication%29+as+%3Fnumber%29+WHERE%0D%0A%7B%0D%0A%7B+%3Fpublication+a+bibo%3AArticle+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ABook+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ADocumentPart+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+dco%3APoster+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3AThesis+.+%7D%0D%0A%3Fpublication+dco%3AassociatedDCOCommunity+%3Fdcocomm.%0D%0A%3Fdcocomm+rdfs%3Alabel+%3Fdcocommname.%0D%0A%7D%0D%0AGROUP+BY+%3Fdcocommname&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV");
 	} 
 });
-
 
 function updateNumbers(number) {
 	commNumbers.push(number);
 };
 
+function updateNames(name) {
+	commNames.push(name);
+};
+
+//Right now, the full names stored in commNames are not used because some are too big
+//to fit onscreen. However, they are still stored for use in other queries.
 function generateChart(commNumbers) {
 	return new d3pie("pieChart", {
 		"header": {
@@ -70,37 +111,44 @@ function generateChart(commNumbers) {
 			{
 				"label": "Reservoirs and Fluxes",
 				"value": commNumbers[0],
-				"color": "#0c6197"
+				"color": "#0c6197",
+				"num": 0
 			},
 			{
 				"label": "Data Science",
 				"value": commNumbers[1],
-				"color": "#248838"
+				"color": "#248838",
+				"num": 1
 			},
 			{
 				"label": "Deep Life",
 				"value": commNumbers[2],
-				"color": "#e98125"
+				"color": "#e98125",
+				"num": 2
 			},
 			{
 				"label": "Extreme Physics and Chemistry",
 				"value": commNumbers[3],
-				"color": "#923e99"
+				"color": "#923e99",
+				"num": 3
 			},
 			{
 				"label": "Deep Energy",
 				"value": commNumbers[4],
-				"color": "#00fbe4"
+				"color": "#00fbe4",
+				"num": 4
 			},
 			{
 				"label": "Engagement Team",
 				"value": commNumbers[5],
-				"color": "#eb0ddc"
+				"color": "#eb0ddc",
+				"num": 5
 			},
 			{
 				"label": "DCO Secretariat",
 				"value": commNumbers[6],
-				"color": "#f3f10b"
+				"color": "#f3f10b",
+				"num": 6
 			}
 			]
 		},
@@ -141,9 +189,14 @@ function generateChart(commNumbers) {
 				"enabled": true,
 				"percentage": 100
 			}
-		}
-	});
-
+		}/*,
+		"callbacks": {
+		"onClickSegment": function(a) {
+			'alert("Segment clicked! See the console for all data passed to the click handler.")';
+			console.log(a);
+			console.log("Hello");
+		}*/
+	})
 };
 
 }); 
