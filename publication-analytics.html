@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="en">
+
+    <title>DCO Analytics</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="facetview2/vendor/jquery/1.7.1/jquery-1.7.1.min.js"></script>
+    <link rel="stylesheet" href="facetview2/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css">
+    <script type="text/javascript" src="facetview2/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min.js"></script>
+
+    <!-- get highcharts -->
+    <script type="text/javascript" src="facetview2/vendor/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="facetview2/vendor/highcharts/highcharts-3d.js"></script>
+
+    <!-- note that we require both es.js and the reportview -->
+    <script type="text/javascript" src="facetview2/es.js"></script>
+    <script type="text/javascript" src="facetview2/jquery.reportview.js"></script>
+
+    <!-- get d3 -->
+    <script type="text/javascript" src="facetview2/vendor/d3/d3.v2.js"></script>
+
+    <!-- nvd3 stuff -->
+    <script type="text/javascript" src="facetview2/vendor/nvd3/fisheye.js"></script>
+    <script type="text/javascript" src="facetview2/vendor/nvd3/nv.d3.js"></script>
+    <link rel="stylesheet" href="facetview2/vendor/nvd3/nv.d3.css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/d3.layout.cloud.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            $('#report-view-pie-facet_hc')
+                    .each(function () {
+                $(this).report({
+                    provider: "hc",
+                    type: "pie",
+                    pie_donut: true,
+                    pie_show_labels: true,
+                    search_url: "//dcotest.tw.rpi.edu/search/dco/publication/_search",
+                    main_title: true,
+                    facets: [
+                        {
+                            "field": "subjectArea.name.exact",
+                            "size": 25,
+                            "display": "Top 25 Subject Areas",
+                            "value_function": function (value) {
+                                return value.toLowerCase()
+                            }
+                        }
+                    ]
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            $('#report-view-pie-facet_d3').each(function () {
+                $(this).report({
+                    provider: "d3",
+                    type: "pie",
+                    pie_donut: true,
+                    pie_transition_duration: 800,
+                    pie_show_labels: false,
+                    pie_label_threshold: 0.05,
+                    main_title: true,
+                    search_url: "//dcotest.tw.rpi.edu/search/dco/publication/_search",
+                    facets: [
+                        {
+                            "field": "mostSpecificType",
+                            "size": 10,
+                            "display": "Publication Type",
+                            "value_function": function (value) {
+                                return value.toLowerCase()
+                            }
+                        }
+                    ]
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function($) {
+
+            $('#subject-area-word-cloud').each(function() {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "https://info.deepcarbon.net/vivo/admin/sparqlquery",
+                    data: {
+                        query: "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \
+                        PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#> \
+                                PREFIX bibo: <http://purl.org/ontology/bibo/> \
+                                PREFIX vivo: <http://vivoweb.org/ontology/core#> \
+                                SELECT DISTINCT ?subjectArea ?uri (COUNT (?pub) AS ?count) \
+                        WHERE \
+                        { \
+                            ?uri vivo:subjectAreaOf ?pub . \
+                                ?pub rdf:type bibo:Document . \
+                                ?uri rdfs:label ?subjectArea . \
+                        } \
+                        GROUP BY ?uri ?subjectArea \
+                                ORDER BY DESC(?count) ?subjectArea",
+                        resultFormat: "RS_JSON"
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        var theQueryResult = data;
+                        var subjectAreas = [];
+                        for (var i = 0; i < theQueryResult.results.bindings.length; i++) {
+                            var item = {
+                                text: theQueryResult.results.bindings[i].subjectArea.value,
+                                link: theQueryResult.results.bindings[i].uri.value,
+                                size: Number(theQueryResult.results.bindings[i].count.value)
+                            };
+                            subjectAreas.push(item);
+                        }
+
+                        var fill = d3.scale.category20();
+
+                        var layout =
+                                d3.layout.cloud()
+                                        .size([600, 400])
+                                        .words(subjectAreas)
+                                        .padding(1)
+                                        .rotate(function () {
+                                            return 0;
+                                        })
+                                        .font("Impact")
+                                        .fontSize(function (d) {
+                                            return d.size * 5
+                                        })
+                                        .on("end", draw);
+
+                        layout.start();
+
+                        function draw(words) {
+                            d3.select("#subject-area-word-cloud").append("svg")
+                                    .attr("width", layout.size()[0])
+                                    .attr("height", layout.size()[1])
+                                    .attr("xmlns/:xlink", "http://www.w3.org/1999/xlink")
+                                    .append("g")
+                                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                                    .selectAll("text")
+                                    .data(words)
+                                    .enter()
+                                    .append("a")
+                                    .attr("xlink:href", function (d) {
+                                        return d.url;
+                                    })
+                                    .attr("target", "_blank")
+                                    .append("text")
+                                    .style("font-size", function (d) {
+                                        return d.size + "px";
+                                    })
+                                    .style("font-family", "Impact")
+                                    .style("fill", function (d, i) {
+                                        return fill(i);
+                                    })
+                                    .attr("text-anchor", "middle")
+                                    .attr("transform", function (d) {
+                                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                                    })
+                                    .text(function (d) {
+                                        return d.text;
+                                    })
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">DCO Analytics</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="dashboard.html">Overview <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Reports</a></li>
+                    <li><a href="#">Export</a></li>
+                    </li>
+                </ul>
+                <hr />
+                <h4 class="navbar-header">Analytics</h4>
+                <div>
+                    <ul class="nav nav-sidebar navbar-right">
+                        <li><a href="member-analytics.html">DCO Member Analytics</a></li>
+                        <li class="active"><a href="publication-analytics.html">Publication Analytics</a></li>
+                        <li><a href="author-analytics.html">Author Analytics</a></li>
+                        <li><a href="dataset-analytics.html">Dataset Analytics</a></li>
+                        <li><a href="group-analytics.html">Group Analytics</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <h1 class="page-header">Publication Analytics</h1>
+
+            <div class="row-fluid">
+                <div class="col-md-5">
+                    <div id="report-view-pie-facet_hc"></div>
+                </div>
+                <div class="col-md-5 text-center">
+                    <h4>Subject Areas Word Cloud</h4>
+                    <div id="subject-area-word-cloud" class="cloud"></div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row-fluid">
+                <div class="col-md-5">
+                    <div id="report-view-pie-facet_d3" class="pie"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

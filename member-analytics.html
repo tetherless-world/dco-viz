@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="en">
+
+    <title>DCO Analytics</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="facetview2/vendor/jquery/1.7.1/jquery-1.7.1.min.js"></script>
+    <link rel="stylesheet" href="facetview2/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css">
+    <script type="text/javascript" src="facetview2/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min.js"></script>
+
+    <!-- get highcharts -->
+    <script type="text/javascript" src="facetview2/vendor/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="facetview2/vendor/highcharts/highcharts-3d.js"></script>
+
+    <!-- note that we require both es.js and the reportview -->
+    <script type="text/javascript" src="facetview2/es.js"></script>
+    <script type="text/javascript" src="facetview2/jquery.reportview.js"></script>
+
+    <!-- get d3 -->
+    <script type="text/javascript" src="facetview2/vendor/d3/d3.v2.js"></script>
+
+    <!-- nvd3 stuff -->
+    <script type="text/javascript" src="facetview2/vendor/nvd3/fisheye.js"></script>
+    <script type="text/javascript" src="facetview2/vendor/nvd3/nv.d3.js"></script>
+    <link rel="stylesheet" href="facetview2/vendor/nvd3/nv.d3.css">
+
+    <script type="text/javascript" src="js/d3.layout.cloud.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            $('#areas-of-expertise-word-cloud').each(function() {
+                $.ajax({
+                            type: 'GET',
+                            url: "https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdf%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+xsd%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0D%0APREFIX+owl%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0D%0APREFIX+swrl%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F11%2Fswrl%23%3E%0D%0APREFIX+swrlb%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2003%2F11%2Fswrlb%23%3E%0D%0APREFIX+vitro%3A+%3Chttp%3A%2F%2Fvitro.mannlib.cornell.edu%2Fns%2Fvitro%2F0.7%23%3E%0D%0APREFIX+agu-index%3A+%3Chttp%3A%2F%2Fdeepcarbon.net%2Fontology%2Fagu-index%23%3E%0D%0APREFIX+bibo%3A+%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E%0D%0APREFIX+c4o%3A+%3Chttp%3A%2F%2Fpurl.org%2Fspar%2Fc4o%2F%3E%0D%0APREFIX+cito%3A+%3Chttp%3A%2F%2Fpurl.org%2Fspar%2Fcito%2F%3E%0D%0APREFIX+dcat%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+event%3A+%3Chttp%3A%2F%2Fpurl.org%2FNET%2Fc4dm%2Fevent.owl%23%3E%0D%0APREFIX+fabio%3A+%3Chttp%3A%2F%2Fpurl.org%2Fspar%2Ffabio%2F%3E%0D%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0APREFIX+geo%3A+%3Chttp%3A%2F%2Faims.fao.org%2Faos%2Fgeopolitical.owl%23%3E%0D%0APREFIX+p.1%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0D%0APREFIX+p.2%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+ocrer%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2FOCRe%2Fresearch.owl%23%3E%0D%0APREFIX+ocresd%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2FOCRe%2Fstudy_design.owl%23%3E%0D%0APREFIX+p.3%3A+%3Chttp%3A%2F%2Fvivoweb.org%2Fontology%2Fprovenance-support%23%3E%0D%0APREFIX+prov%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0APREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0APREFIX+vitro-public%3A+%3Chttp%3A%2F%2Fvitro.mannlib.cornell.edu%2Fns%2Fvitro%2Fpublic%23%3E%0D%0APREFIX+vivo%3A+%3Chttp%3A%2F%2Fvivoweb.org%2Fontology%2Fcore%23%3E%0D%0APREFIX+scires%3A+%3Chttp%3A%2F%2Fvivoweb.org%2Fontology%2Fscientific-research%23%3E%0D%0A%0D%0ASELECT+DISTINCT+%3FexpertiseName+%3FexpertiseUri+%28COUNT+%28%3Fperson%29+AS+%3Fcount%29%0D%0AWHERE%0D%0A%7B%0D%0A%3FexpertiseUri+vivo%3AresearchAreaOf+%3Fperson+.%0D%0A%3Fperson+rdf%3Atype+foaf%3APerson+.%0D%0A%3FexpertiseUri+rdfs%3Alabel+%3FexpertiseName+.%0D%0AFILTER+%28%3FexpertiseUri+%21%3D+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Findividual%2Fa7bc1230-44af-4a01-84cf-e4d7bf5643d8%3E%29%0D%0A%7D%0D%0AGROUP+BY+%3FexpertiseUri+%3FexpertiseName%0D%0AORDER+BY+DESC%28%3Fcount%29+%3FexpertiseName&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV",
+                            dataType: 'json',
+                            success: function(data) {
+                                var theQueryResult=data;
+                                var leaders = [];
+                                for (var i=0; i<theQueryResult.results.bindings.length; i++){
+                                    var item = {text: theQueryResult.results.bindings[i].expertiseName.value,
+                                        link: theQueryResult.results.bindings[i].expertiseUri.value,
+                                        size: Number(theQueryResult.results.bindings[i].count.value),};
+                                    leaders.push(item);
+                                }
+
+                                var fill = d3.scale.category20();
+
+                                var layout =
+                                        d3.layout.cloud()
+                                                .size([600, 400])
+                                                .words(leaders)
+                                                .padding(5)
+                                                .rotate(function() { return 0; })
+                                                .font("Impact")
+                                                .fontSize(function(d) { return d.size; })
+                                                .on("end", draw);
+                                layout.start();
+
+                                function draw(words) {
+                                    d3.select("#areas-of-expertise-word-cloud").append("svg")
+                                            .attr("width", layout.size()[0])
+                                            .attr("height", layout.size()[1])
+                                            .attr("xmlns/:xlink", "http://www.w3.org/1999/xlink")
+                                            .append("g")
+                                            .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                                            .selectAll("text")
+                                            .data(words)
+                                            .enter()
+                                            .append("a")
+                                            .attr("xlink:href", function(d) { return d.link; })
+                                            .attr("target", "_blank")
+                                            .append("text")
+                                            .style("font-size", function(d) { return d.size + "px"; })
+                                            .style("font-family", "Impact")
+                                            .style("fill", function(d, i) { return fill(i); })
+                                            .attr("text-anchor", "middle")
+                                            .attr("transform", function(d) {
+                                                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                                            })
+                                            .text(function(d) { return d.text; });
+                                }
+                            }
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">DCO Analytics</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="dashboard.html">Overview <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Reports</a></li>
+                    <li><a href="#">Export</a></li>
+                    </li>
+                </ul>
+                <hr />
+                <h4 class="navbar-header">Analytics</h4>
+                <div>
+                    <ul class="nav nav-sidebar navbar-right">
+                        <li class="active"><a href="member-analytics.html">DCO Member Analytics</a></li>
+                        <li><a href="publication-analytics.html">Publication Analytics</a></li>
+                        <li><a href="author-analytics.html">Author Analytics</a></li>
+                        <li><a href="dataset-analytics.html">Dataset Analytics</a></li>
+                        <li><a href="group-analytics.html">Group Analytics</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="user-analytics" class="col-md-10">
+            <h1 class="page-header">DCO Member Analytics</h1>
+
+            <div class="row-fluid">
+                <div class="col-md-5">
+                    <iframe src="//dco.tw.rpi.edu/visualizations/NewMemberBarChart.html" width="100%" height="400px" frameBorder="0" scrolling="no"></iframe>
+                </div>
+                <div class="col-md-5">
+                    <iframe src="//dco.tw.rpi.edu/visualizations/TotalMemberTimeSeries.php" width="100%" height="400px" frameBorder="0" scrolling="no"></iframe>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row-fluid">
+                <div class="col-md-5 text-center">
+                    <h4>Areas of Expertise Word Cloud</h4>
+                    <div id="areas-of-expertise-word-cloud" class="cloud">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
