@@ -21,6 +21,8 @@
 var commNumbers = [];
 var commNames = [];
 var peopleCounts = [];
+// FIXME: we need to add more colors in case there's more communities.
+var colors = [ "#0c6197", "#248838", "#e98125", "#923e99", "#00fbe4", "#eb0ddc", "#f3f10b", "#990000", "#000000", "#515151"  ];
 
 moreInfo.onclick = function()
 {
@@ -34,7 +36,7 @@ moreInfo.onclick = function()
 		var i = segment.data.num;
 		var name = commNames[i];
 		var publications = segment.data.value;
-		alert("The " + name + " has " + publications + " publications and " + peopleCounts[i] + " members." );
+		alert("The " + name + " has " + publications + " publications and " + peopleCounts[commNames[i]] + " members." );
 	}
 };
 
@@ -46,7 +48,7 @@ $.ajax({
 	success: function(data) {
 	for(var i = 0; i < data.results.bindings.length; i++)
 	{
-		peopleCounts.push(parseInt(data.results.bindings[i].number.value));
+		peopleCounts[data.results.bindings[i].dcocommname.value] = parseInt(data.results.bindings[i].number.value);
 	}
 	}
 	});
@@ -66,7 +68,7 @@ $.ajax({
 			updateNames(data.results.bindings[i].dcocommname.value);
 		}
 
-		pie = generateChart(commNumbers);
+		pie = generateChart(commNames, commNumbers);
 		//Opens the people count and stores results in peopleCounts
 		openURL(pplCount)
 	} 
@@ -82,8 +84,8 @@ function updateNames(name) {
 
 //Right now, the full names stored in commNames are not used because some are too big
 //to fit onscreen. However, they are still stored for use in other queries.
-function generateChart(commNumbers) {
-	return new d3pie("pieChart", {
+function generateChart(commNames, commNumbers) {
+	var json = {
 		"header": {
 			"title": {
 				"text": "Publications Sorted by Affiliated Community",
@@ -111,48 +113,6 @@ function generateChart(commNumbers) {
 		},
 		"data": {
 			"content": [
-			{
-				"label": "Reservoirs and Fluxes",
-				"value": commNumbers[0],
-				"color": "#0c6197",
-				"num": 0
-			},
-			{
-				"label": "Data Science",
-				"value": commNumbers[1],
-				"color": "#248838",
-				"num": 1
-			},
-			{
-				"label": "Deep Life",
-				"value": commNumbers[2],
-				"color": "#e98125",
-				"num": 2
-			},
-			{
-				"label": "Extreme Physics and Chemistry",
-				"value": commNumbers[3],
-				"color": "#923e99",
-				"num": 3
-			},
-			{
-				"label": "Deep Energy",
-				"value": commNumbers[4],
-				"color": "#00fbe4",
-				"num": 4
-			},
-			{
-				"label": "Engagement Team",
-				"value": commNumbers[5],
-				"color": "#eb0ddc",
-				"num": 5
-			},
-			{
-				"label": "DCO Secretariat",
-				"value": commNumbers[6],
-				"color": "#f3f10b",
-				"num": 6
-			}
 			]
 		},
 		"labels": {
@@ -192,14 +152,21 @@ function generateChart(commNumbers) {
 				"enabled": true,
 				"percentage": 100
 			}
-		}/*,
-		"callbacks": {
-		"onClickSegment": function(a) {
-			'alert("Segment clicked! See the console for all data passed to the click handler.")';
-			console.log(a);
-			console.log("Hello");
-		}*/
-	})
+		}
+	};
+
+    // we now have the basic structure and can add the data returned from the first query
+    for( var i = 0; i < commNames.length; i++ )
+    {
+        json.data.content.push( {
+            "label": commNames[i],
+            "value": commNumbers[i],
+            "color": colors[i],
+            "num": i
+        } );
+    }
+
+    return new d3pie("pieChart",json);
 };
 
 }); 
