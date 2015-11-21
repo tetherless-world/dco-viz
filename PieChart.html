@@ -21,6 +21,8 @@
 var commNumbers = [];
 var commNames = [];
 var publicationCounts = [];
+// FIXME: we need to add more colors in case there's more communities.
+var colors = [ "#0c6197", "#248838", "#e98125", "#923e99", "#00fbe4", "#eb0ddc", "#f3f10b", "#990000", "#000000", "#515151"  ];
 
 moreInfo.onclick = function()
 {
@@ -34,7 +36,7 @@ moreInfo.onclick = function()
 		var i = segment.data.num;
 		var name = commNames[i];
 		var members = segment.data.value;
-		alert("The " + name + " has " + members + " members and " + publicationCounts[i] + " publications." );
+		alert("The " + name + " has " + members + " members and " + publicationCounts[commNames[i]] + " publications." );
 	}
 };
 
@@ -46,7 +48,11 @@ $.ajax({
 	success: function(data) {
 	for(var i = 0; i < data.results.bindings.length; i++)
 	{
-		publicationCounts.push(parseInt(data.results.bindings[i].number.value));
+        // we know the dcocommname from the first query that grabs member counts for the communities
+        // so we can use key/value paris in publicationCounts to store the number of publications
+        // for that community. This is instead of relying on ordering of the second query results to be
+        // the same as the first query results.
+		publicationCounts[data.results.bindings[i].dcocommname.value] = parseInt(data.results.bindings[i].number.value);
 	}
 	}
 	});
@@ -62,7 +68,7 @@ $.ajax({
 			updateNames(data.results.bindings[i].dcocommname.value);
 		}
 
-		pie = generateChart(commNumbers);
+		pie = generateChart(commNames,commNumbers);
 		//Opens the publication count first and stores results in publicationCounts
 		openURL("https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+bibo%3A+%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E%0D%0A%0D%0A%23%0D%0A%23Counts+the+number+of+publications+on+the+DCO+website%0D%0A%23Sorts+the+publications+by+DCO+community%0D%0A%23%0D%0ASELECT+%3Fdcocommname+%28COUNT%28%3Fpublication%29+as+%3Fnumber%29+WHERE%0D%0A%7B%0D%0A%7B+%3Fpublication+a+bibo%3AArticle+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ABook+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ADocumentPart+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+dco%3APoster+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3AThesis+.+%7D%0D%0A%3Fpublication+dco%3AassociatedDCOCommunity+%3Fdcocomm.%0D%0A%3Fdcocomm+rdfs%3Alabel+%3Fdcocommname.%0D%0A%7D%0D%0AGROUP+BY+%3Fdcocommname&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV");
 	} 
@@ -78,8 +84,8 @@ function updateNames(name) {
 
 //Right now, the full names stored in commNames are not used because some are too big
 //to fit onscreen. However, they are still stored for use in other queries.
-function generateChart(commNumbers) {
-	return new d3pie("pieChart", {
+function generateChart(commNames,commNumbers) {
+    var json = {
 		"header": {
 			"title": {
 				"text": "Members Sorted by Affiliated Community",
@@ -106,50 +112,8 @@ function generateChart(commNumbers) {
 			"pieOuterRadius": "90%"
 		},
 		"data": {
-			"sortOrder": "label-asc",
+			"sortOrder": "label-desc",
 			"content": [
-			{
-				"label": "Reservoirs and Fluxes",
-				"value": commNumbers[0],
-				"color": "#0c6197",
-				"num": 0
-			},
-			{
-				"label": "Data Science",
-				"value": commNumbers[1],
-				"color": "#248838",
-				"num": 1
-			},
-			{
-				"label": "Deep Life",
-				"value": commNumbers[2],
-				"color": "#e98125",
-				"num": 2
-			},
-			{
-				"label": "Extreme Physics and Chemistry",
-				"value": commNumbers[3],
-				"color": "#923e99",
-				"num": 3
-			},
-			{
-				"label": "Deep Energy",
-				"value": commNumbers[4],
-				"color": "#00fbe4",
-				"num": 4
-			},
-			{
-				"label": "Engagement Team",
-				"value": commNumbers[5],
-				"color": "#eb0ddc",
-				"num": 5
-			},
-			{
-				"label": "DCO Secretariat",
-				"value": commNumbers[6],
-				"color": "#f3f10b",
-				"num": 6
-			}
 			]
 		},
 		"labels": {
@@ -174,7 +138,7 @@ function generateChart(commNumbers) {
 				"enabled": true
 			},
 			"truncation": {
-				"enabled": true
+				"enabled": false
 			}
 		},
 		"effects": {
@@ -189,14 +153,21 @@ function generateChart(commNumbers) {
 				"enabled": true,
 				"percentage": 100
 			}
-		}/*,
-		"callbacks": {
-		"onClickSegment": function(a) {
-			'alert("Segment clicked! See the console for all data passed to the click handler.")';
-			console.log(a);
-			console.log("Hello");
-		}*/
-	})
+		}
+    };
+
+    // we now have the basic structure and can add the data returned from the first query
+    for( var i = 0; i < commNames.length; i++ )
+    {
+        json.data.content.push( {
+            "label": commNames[i],
+            "value": commNumbers[i],
+            "color": colors[i],
+            "num": i
+        } );
+    }
+
+    return new d3pie("pieChart",json);
 };
 
 }); 
