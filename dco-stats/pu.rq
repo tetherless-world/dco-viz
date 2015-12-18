@@ -1,0 +1,18 @@
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX dco: <http://info.deepcarbon.net/schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+
+select (str(?name) as ?Name) ?dcoId ?ry_uri (str(?ry_l) as ?ReportingYear) ?project_uri (str(?project_l) as ?Project) ?by_uri (str(?by_l) as ?EnteredBy)
+WHERE
+{
+  <URI> rdfs:label ?name .
+  OPTIONAL { <URI> dco:hasDcoId ?dcoId }
+  OPTIONAL { <URI> dco:forReportingYear ?ry_uri . ?ry_uri rdfs:label ?ry_l . }
+  OPTIONAL { <URI> dco:forProject ?project_uri . ?project_uri rdfs:label ?project_l . }
+  OPTIONAL { <URI> dco:modificationNote ?mn . ?mn dco:modifiedBy ?by_uri . ?by_uri rdfs:label ?by_l . }
+} GROUP BY ?name ?dcoId ?ry_uri ?ry_l ?project_uri ?project_l ?by_uri ?by_l

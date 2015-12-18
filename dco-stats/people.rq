@@ -1,0 +1,20 @@
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX dco: <http://info.deepcarbon.net/schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+
+select (str(?name) as ?Name) ?dcoId (GROUP_CONCAT(distinct ?uid; separator=';') as ?Uid) (str(?country_l) as ?Country) (GROUP_CONCAT(distinct ?org_l; separator=';') as ?Organizations) (GROUP_CONCAT(distinct ?comm_l; separator=';') as ?Communities) (GROUP_CONCAT(distinct ?area_l; separator=';') as ?AreasOfExpertise)
+WHERE
+{
+  <URI> rdfs:label ?name .
+  OPTIONAL { <URI> dco:hasDcoId ?dcoId }
+  OPTIONAL { <URI> <http://vivo.mydomain.edu/ns#networkId> ?uid . }
+  OPTIONAL { <URI> dco:inOrganization ?org . ?org rdfs:label ?org_l }
+  OPTIONAL { <URI> dco:homeCountry ?country . ?country rdfs:label ?country_l . }
+  OPTIONAL { <URI> dco:associatedDCOCommunity ?comm . ?comm rdfs:label ?comm_l . }
+  OPTIONAL { <URI> vivo:hasResearchArea ?area . ?area rdfs:label ?area_l . }
+} GROUP BY ?name ?dcoId ?country_l

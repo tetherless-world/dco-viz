@@ -1,0 +1,23 @@
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX dco: <http://info.deepcarbon.net/schema#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+
+select ?title ?dcoId ?year ?doi (GROUP_CONCAT(distinct ?inner_label; separator=';') as ?Participants) (GROUP_CONCAT(distinct ?comms_l; separator=';') as ?Communities) where
+{
+  <URI> rdfs:label ?title .
+  OPTIONAL {
+    <URI> obo:BFO_0000055 ?role .
+    ?person obo:RO_0000053 ?role .
+    ?person rdfs:label ?inner_label .
+  }
+  OPTIONAL { <URI> dco:yearOfPublication ?year }
+  OPTIONAL { <URI> dco:associatedDCOCommunity ?comms . ?comms rdfs:label ?comms_l . }
+  OPTIONAL { <URI> bibo:doi ?doi }
+  OPTIONAL { <URI> dco:hasDcoId ?dcoId }
+} GROUP BY ?title ?doi ?year ?dcoId
