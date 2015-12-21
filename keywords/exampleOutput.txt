@@ -1,0 +1,17 @@
+carbon 6
+content 3
+magmas 3
+ridge 2
+mantle 2
+glass 2
+concentrations 2
+scale 1
+surface 1
+volatiles 1
+solubility 1
+samples 1
+time 1
+seafloor 1
+order 1
+assess 1
+source 1
