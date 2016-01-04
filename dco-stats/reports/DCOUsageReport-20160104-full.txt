@@ -1,0 +1,310 @@
+DataSets
+number of new individuals  = 1
+Low-temperature heat capacities and entropies at 298.15°K. of diaspore, kaloinite, dickite, and halloysite
+   DCO-ID: http://dx.deepcarbon.net/11121/3817-2553-7498-5972-CC
+
+
+Field Studies
+number of new individuals  = 0
+
+Instruments
+number of new individuals  = 0
+
+People
+number of new individuals  = 32
+Girard, Eric
+   DCO-ID: http://dx.deepcarbon.net/11121/5463-7508-8674-3276-CC
+
+Poggenburg,  J
+   DCO-ID: http://dx.deepcarbon.net/11121/3802-9371-2659-2235-CC
+
+Morán, C
+   DCO-ID: http://dx.deepcarbon.net/11121/6799-4250-4195-8796-CC
+
+Bell, Elizabeth A.
+   DCO-ID: http://dx.deepcarbon.net/11121/9865-4948-8021-4308-CC
+
+Grosch, Eugene G.
+   DCO-ID: http://dx.deepcarbon.net/11121/4699-3473-2555-6545-CC
+
+Bianchi, A.
+   DCO-ID: http://dx.deepcarbon.net/11121/7312-2256-6346-6117-CC
+
+Liberatore, Stephen P.
+   DCO-ID: http://dx.deepcarbon.net/11121/8074-8876-4197-8239-CC
+
+Franzetti, Bruno
+   DCO-ID: http://dx.deepcarbon.net/11121/5522-6102-9438-4756-CC
+
+Bahri, Mohamed
+   DCO-ID: http://dx.deepcarbon.net/11121/1520-6464-1610-1436-CC
+   Usernames: Mohamed
+   Country: United States of America
+   Organizations: Princeton University
+   Communities: Deep Life Community;Deep Energy Community;Extreme Physics and Chemistry Community
+   AreasOfExpertise: Bacteria;biophysics
+
+Boehnke, Patrick
+   DCO-ID: http://dx.deepcarbon.net/11121/5319-8793-5573-9484-CC
+
+Shao, Zongze
+   DCO-ID: http://dx.deepcarbon.net/11121/5676-8198-9689-5395-CC
+
+Garcin, J.
+   DCO-ID: http://dx.deepcarbon.net/11121/2770-1134-6110-4476-CC
+
+Doherty, Kenneth W.
+   DCO-ID: http://dx.deepcarbon.net/11121/5575-6682-3113-1983-CC
+
+Aertsen, Abram
+   DCO-ID: http://dx.deepcarbon.net/11121/7549-2251-5935-6019-CC
+   Usernames: abramaertsen
+   Country: Belgium
+   Organizations: Katholiek Universiteit Leuven
+   Communities: Deep Life Community
+   AreasOfExpertise: Bacterial Genetics;Molecular and Cell Bology;High-Pressure Microbiology
+
+Muller, Dietmar
+   DCO-ID: http://dx.deepcarbon.net/11121/8895-1583-9658-8578-CC
+   Usernames: dietmar
+   Country: Australia
+   Organizations: The University of Sydney
+   Communities: Data Science Team
+   AreasOfExpertise: modeling;Geoscience information;Tectonics;Software Development;Earth and Planetary Science;Subduction;Web Science;Web Science;Marine Geophysics;Marine Geology;Scientific Ocean Drilling
+
+Zeng, Xiang
+   DCO-ID: http://dx.deepcarbon.net/11121/7267-4504-6780-6602-CC
+
+Williams, Jeremy
+   DCO-ID: http://dx.deepcarbon.net/11121/5253-9417-3824-1466-CC
+   Usernames: jcw_umb
+   Country: United States of America
+   Organizations: Kent State University
+   Communities: DCO Secretariat
+   AreasOfExpertise: Paleoenvironmental Reconstruction;Geochemisty
+
+Teschner, M
+   DCO-ID: http://dx.deepcarbon.net/11121/9593-2189-6488-6887-CC
+
+Tholosan, O.
+   DCO-ID: http://dx.deepcarbon.net/11121/5757-4101-2249-2592-CC
+
+Louvel, Marion
+   DCO-ID: http://dx.deepcarbon.net/11121/2501-4957-2031-6840-CC
+   Usernames: MarionL
+   Country: France
+   Organizations: Bristol University
+   Communities: Reservoirs and Fluxes Community
+   AreasOfExpertise: High Pressure X-Ray Methods;Experimental Petrology;Carbon Cycling;Gas and Fluid Geochemistry;Gas and Fluid Geochemistry
+
+Furi, E
+   DCO-ID: http://dx.deepcarbon.net/11121/9642-2634-9881-6123-CC
+
+Barany, H.
+   DCO-ID: http://dx.deepcarbon.net/11121/3552-8576-3238-5662-CC
+
+Hammar, Terence R.
+   DCO-ID: http://dx.deepcarbon.net/11121/9912-3869-1446-3627-CC
+
+Garzón, G
+   DCO-ID: http://dx.deepcarbon.net/11121/8484-8484-1110-1223-CC
+
+Pankratz, L. B.
+   DCO-ID: http://dx.deepcarbon.net/11121/5393-6490-2933-6723-CC
+
+Jebbar, Mohamed
+   DCO-ID: http://dx.deepcarbon.net/11121/2476-1280-7224-1930-CC
+
+Pall, Jodie
+   DCO-ID: http://dx.deepcarbon.net/11121/4766-1887-4596-6532-CC
+   Usernames: jodie_p
+   Country: Australia
+   Organizations: The University of Sydney
+   Communities: Reservoirs and Fluxes Community
+   AreasOfExpertise: Data Visualization;Undergraduate in Geology
+
+Weller, W. W.
+   DCO-ID: http://dx.deepcarbon.net/11121/9377-8859-9083-1855-CC
+
+SAEGUSA, S.
+   DCO-ID: http://dx.deepcarbon.net/11121/4016-6824-7619-9198-CC
+
+KANEKO, S.
+   DCO-ID: http://dx.deepcarbon.net/11121/6065-2801-4787-2897-CC
+
+NAKAGAWA, F.
+   DCO-ID: http://dx.deepcarbon.net/11121/5043-8000-5434-2777-CC
+
+Faber, E
+   DCO-ID: http://dx.deepcarbon.net/11121/5042-7157-6551-9198-CC
+
+Coppo, Leonardo
+   DCO-ID: http://dx.deepcarbon.net/11121/5819-4535-7503-4087-CC
+   Usernames: leonardo coppo
+   Country: Italy
+   Organizations: WEST Systems
+   Communities: Reservoirs and Fluxes Community
+   AreasOfExpertise: Volatile Fluxes;Environmental;Ecology;Atmosphere;Volcanic Gas Geochemistry;Climate Change;Gas Geochemistry;Gas geochemistry *;Volcanology and Geochemistry;Volcanic Carbon Degassing
+
+   Number of new members: 7
+   Deep Life Community 2
+   Reservoirs and Fluxes Community 3
+   Extreme Physics and Chemistry Community 1
+   Deep Energy Community 1
+   Data Science Team 1
+   DCO Secretariat 1
+
+Projects
+number of new individuals  = 0
+
+Project Updates
+number of new individuals  = 0
+
+Articles
+number of new individuals  = 15
+Statistical analysis of mineral diversity and distribution: Earth's mineralogy is unique
+   DCO-ID: http://dx.deepcarbon.net/11121/3506-5254-7324-2084-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.1016/j.epsl.2015.06.028
+   Journal: Earth and Planetary Science Letters *
+   Authors: Hystad, Grethe;Downs, Robert T.;Grew, Edward S.;Hazen, Robert
+
+A high-pressure serial sampler to measure microbial activity in the deep sea
+   DCO-ID: http://dx.deepcarbon.net/11121/9823-8360-2744-9140-CC
+   Publication Type: Academic Article
+   Is Contribution to the DCO: No
+   Publication Year: 1999
+   DOI: 10.1016/S0967-0637(99)00039-4
+   Journal: Deep-Sea Research Part I-Oceanographic Research Papers
+   Authors: Bianchi, A.;Garcin, J.;Tholosan, O.
+
+Carbon isotope and abundance systematics of Icelandic geothermal gases, fluids and subglacial basalts with implications for mantle plume-related CO2 fluxes
+   DCO-ID: http://dx.deepcarbon.net/11121/7778-8471-9892-4814-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2014
+   Journal: Geochimica Et Cosmochimica Acta
+   Authors: Barry, P.H.;Hilton, D.R.;Füri, E.;Halldórsson, S.A.;Grönvold, K.
+   Communities: Reservoirs and Fluxes Community
+
+Microbial diversity and adaptation to high hydrostatic pressure in deep-sea hydrothermal vents prokaryotes
+   DCO-ID: http://dx.deepcarbon.net/11121/1397-2235-9671-4073-CC
+   Publication Type: Review
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.1007/s00792-015-0760-3
+   Journal: Extremophiles
+   Authors: Jebbar, Mohamed;Franzetti, Bruno;Girard, Eric;Oger, Phil
+
+Low-temperature heat capacities and entropies at 298.15°K. of diaspore, kaloinite, dickite, and halloysite
+   DCO-ID: http://dx.deepcarbon.net/11121/7011-3525-4395-5871-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 1961
+   Journal: U.S Bureau of Mines Report of Investigations
+   Authors: King, Edward G.;Weller, W. W.
+
+Potentially biogenic carbon preserved in a 4.1 billion-year-old zircon
+   DCO-ID: http://dx.deepcarbon.net/11121/6397-3559-8955-6271-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.1073/pnas.1517557112
+   Journal: Proceedings of the National Academy of Sciences
+   Authors: Bell, Elizabeth A.;Boehnke, Patrick;Harrison, T M;Mao, Wendy
+   Communities: Extreme Physics and Chemistry Community
+
+Complete Genome Sequence of Hyperthermophilic Piezophilic Archaeon Palaeococcus pacificus DY20341 T , Isolated from Deep-Sea Hydrothermal Sediments 
+   DCO-ID: http://dx.deepcarbon.net/11121/3163-6660-6393-3617-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.1128/genomeA.01080-15
+   Journal: Genome Announcements
+   Authors: Zeng, Xiang;Jebbar, Mohamed;Shao, Zongze
+
+Missing or no information for Publication http://info.deepcarbon.net/individual/n2717
+
+A new gas-tight isobaric sampler for hydrothermal fluids
+   DCO-ID: http://dx.deepcarbon.net/11121/1629-1708-1913-8260-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2002
+   DOI: 10.1016/S0967-0637(01)00046-2
+   Journal: Deep-Sea Research Part I-Oceanographic Research Papers
+   Authors: Seewald, Jeffrey;Doherty, Kenneth W.;Hammar, Terence R.;Liberatore, Stephen P.
+
+Missing or no information for Publication http://info.deepcarbon.net/individual/n34231
+
+Development of a multibottle gas-tight fluid sampler WHATS II for Japanese submersibles/ROVs
+   DCO-ID: http://dx.deepcarbon.net/11121/3188-9680-4822-7709-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2006
+   DOI: 10.1111/j.1468-8123.2006.00143.x
+   Journal: Geofluids
+   Authors: SAEGUSA, S.;Tsunogai, U.;NAKAGAWA, F.;KANEKO, S.
+
+The pyroxenite-diamond connection
+   DCO-ID: http://dx.deepcarbon.net/11121/4478-5227-8738-6178-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.7185/geochemlet.1601
+   Journal: Geochemical Perspectives Letters
+   Authors: Kiseeva, Kate;Wood, Bernard;Ghosh, Sujoy;Stachel, Thomas
+   Communities: Extreme Physics and Chemistry Community
+
+Diamond formation due to a pH drop during fluid–rock interactions
+   DCO-ID: http://dx.deepcarbon.net/11121/6048-8482-1047-6878-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.1038/ncomms9702
+   Journal: Nature Communications
+   Authors: Sverjensky, Dimitri;Huang, Fang 
+   Communities: Extreme Physics and Chemistry Community;Reservoirs and Fluxes Community
+
+Complete Genome Sequence of Hyperthermophilic Piezophilic Archaeon Palaeococcus pacificus DY20341 T , Isolated from Deep-Sea Hydrothermal Sediments 
+   DCO-ID: http://dx.deepcarbon.net/11121/9819-5227-4158-1979-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.1128/genomeA.01080-15
+   Journal: Genome Announcements
+   Authors: Zeng, Xiang;Jebbar, Mohamed;Shao, Zongze
+
+Self-Sinking Capsules to Investigate Earth's Interior and Dispose of Radioactive Waste
+   DCO-ID: http://dx.deepcarbon.net/11121/5021-5498-6809-7418-CC
+   Publication Type: Conference Paper
+   Is Contribution to the DCO: No
+   Authors: Ausubel, Jesse
+
+Microbes, Mineral Evolution, and the Rise of Microcontinents—Origin and Coevolution of Life with Early Earth
+   DCO-ID: http://dx.deepcarbon.net/11121/9013-9147-2784-9681-CC
+   Publication Type: Journal Article
+   Is Contribution to the DCO: No
+   Publication Year: 2015
+   DOI: 10.1089/ast.2015.1302
+   Journal: Astrobiology
+   Authors: Hazen, Robert;Grosch, Eugene G.
+
+   Reservoirs and Fluxes Community 2
+   Extreme Physics and Chemistry Community 3
+
+Number of users logged in in last 30 days: 45
+   DCO Secretariat 5
+   Reservoirs and Fluxes Community 8
+   Deep Life Community 13
+   Data Science Team 4
+   Deep Energy Community 4
+   Engagement Team 6
+   Extreme Physics and Chemistry Community 9
+Number of users logged in to Data Portal in last 30 days: 14
+   Data Science Team 7
+   Deep Life Community 1
+   DCO Secretariat 1
+   Reservoirs and Fluxes Community 1
+   Engagement Team 3

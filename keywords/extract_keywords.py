@@ -47,8 +47,8 @@ def run(input_file, output_file='output.txt', verbose=True):
     f = codecs.open(output_file, 'w', encoding='utf-8')
     for word in keywords:
         f.write(u'{} {}\n'.format(word[0], word[1]))
-        if verbose:
-            print word[0], word[1]
+        #if verbose:
+        #    print( word[0] + " " + word[1] )
     f.close()
 
 
