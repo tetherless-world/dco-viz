@@ -8,7 +8,7 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX vivo: <http://vivoweb.org/ontology/core#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 
-select ?title ?dcoId ?year ?doi (GROUP_CONCAT(distinct ?inner_label; separator=';') as ?Participants) (GROUP_CONCAT(distinct ?comms_l; separator=';') as ?Communities) where
+select ?title ?dcoId ?year ?doi (GROUP_CONCAT(distinct ?inner_label; separator=';') as ?Participants) (GROUP_CONCAT(distinct ?comms_l; separator=';') as ?Communities) (GROUP_CONCAT(distinct ?teams_l; spearator=';') as ?Teams) where
 {
   <URI> rdfs:label ?title .
   OPTIONAL {
@@ -18,6 +18,7 @@ select ?title ?dcoId ?year ?doi (GROUP_CONCAT(distinct ?inner_label; separator='
   }
   OPTIONAL { <URI> dco:yearOfPublication ?year }
   OPTIONAL { <URI> dco:associatedDCOCommunity ?comms . ?comms rdfs:label ?comms_l . }
+  OPTIONAL { <URI> dco:associatedDCOTeam ?teams . ?teams rdfs:label ?teams_l . }
   OPTIONAL { <URI> bibo:doi ?doi }
   OPTIONAL { <URI> dco:hasDcoId ?dcoId }
 } GROUP BY ?title ?doi ?year ?dcoId
