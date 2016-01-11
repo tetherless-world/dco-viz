@@ -8,6 +8,7 @@ cntFile = "personCount"
 rqFile = "people.rq"
 
 communities = {}
+teamlist = {}
 numMembers = 0
 
 def printIt( uri, jObj ):
@@ -32,6 +33,14 @@ def printIt( uri, jObj ):
                     communities[comm]+=1
                 else:
                     communities[comm] = 1
+        if "Teams" in jObj[0]:
+            teams = jObj[0]["Teams"]["value"]
+            print( "    Teams: " + teams )
+            for team in teams.split(';'):
+                if team in teamlist:
+                    teamlist[comm]+=1
+                else:
+                    teamlist[comm] = 1
         if "AreasOfExpertise" in jObj[0]:
             print( "    AreasOfExpertise: " + jObj[0]["AreasOfExpertise"]["value"] )
     else:
@@ -43,6 +52,8 @@ stats = DCOStats()
 stats.getNew( query, objFile, query, cntFile, rqFile, printIt )
 print( "    Number of new members: {}".format( numMembers ) )
 for key, value in communities.items():
+    print( "    {} {}".format( key, value ) )
+for key, value in teamlist.items():
     print( "    {} {}".format( key, value ) )
 print( "" )
 
