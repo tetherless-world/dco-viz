@@ -42,7 +42,7 @@ $ptr->close();
   
   
   
-  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  <link rel="stylesheet" type="text/css" href="/dco-viz/css/result-light.css">
   
   <style type='text/css'>
     
@@ -117,8 +117,8 @@ $(function () {
 </head>
 <body>
 
-  <script src="http://code.highcharts.com/highcharts.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="//code.highcharts.com/modules/exporting.js"></script>
 
   <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
   
