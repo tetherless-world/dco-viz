@@ -2,49 +2,72 @@
 <meta charset="utf-8">
 
 <body>
+<script src="js/jquery-2.1.4.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 <script src="js/d3.layout.cloud.js"></script>
 <script src="js/subjectAreas.js"></script>
 <script type="text/javascript">
+    var theQueryResult;
+    var subjectAreas = [];
+    function runQueryAndDrawWordCloud(){
+        jQuery.ajax(
+            {
+                type: 'GET',
+                url: theQueryRSJSON,
+                dataType: 'json',
+                success: function(data) {
+                    console.log("Success in getting query result! Now continue to parse the result...");
+                    theQueryResult=data;
+                    for (var i=0; i<theQueryResult.results.bindings.length; i++){
+                        var item = {text: theQueryResult.results.bindings[i].subjectArea.value,
+                            link: theQueryResult.results.bindings[i].subjectAreaUri.value,
+                            size: Number(theQueryResult.results.bindings[i].count.value),};
+                        subjectAreas.push(item);
 
-    var fill = d3.scale.category20();
+                      }
 
-	 var layout =
-             d3.layout.cloud()
-                 .size([750, 500])
-                 .words(subjectAreas)
-                 .padding(1)
-                 .rotate(function() { return 0; })
-                 .font("Impact")
-                 .fontSize(function(d) { return Math.pow(d.size,1.7); })
-                 .on("end", draw);
+                    var fill = d3.scale.category20();
 
-     layout.start();
+                    var layout =
+                             d3.layout.cloud()
+                                 .size([750, 500])
+                                 .words(subjectAreas)
+                                 .padding(1)
+                                 .rotate(function() { return 0; })
+                                 .font("Impact")
+                                 //.fontSize(function(d) { return Math.pow(d.size,1.7); })
+                                 //subject area counts low so set to *10 for now
+                                 .fontSize(function(d) { return d.size*10 })
+                                 .on("end", draw);
+                    layout.start();
 
-function draw(words) {
-    d3.select("body").append("svg")
-            .attr("width", layout.size()[0])
-            .attr("height", layout.size()[1])
-            .attr("xmlns/:xlink", "http://www.w3.org/1999/xlink")
-            .append("g")
-            .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
-            .selectAll("text")
-            .data(words)
-            .enter()
-            .append("a")
-            .attr("xlink:href", function(d) { return d.url; })
-            .attr("target", "_blank")
-            .append("text")
-            .style("font-size", function(d) { return d.size + "px"; })
-            .style("font-family", "Impact")
-            .style("fill", function(d, i) { return fill(i); })
-            .attr("text-anchor", "middle")
-            .attr("transform", function(d) {
-                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-            })
-            .text(function(d) { return d.text; })
-}
+                    function draw(words) {
+                        d3.select("body").append("svg")
+                            .attr("width", layout.size()[0])
+                            .attr("height", layout.size()[1])
+                            .attr("xmlns/:xlink", "http://www.w3.org/1999/xlink")
+                            .append("g")
+                            .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                            .selectAll("text")
+                            .data(words)
+                            .enter()
+                            .append("a")
+                            .attr("xlink:href", function(d) { return d.link; })
+                            .attr("target", "_blank")
+                            .append("text")
+                            .style("font-size", function(d) { return d.size + "px"; })
+                            .style("font-family", "Impact")
+                            .style("fill", function(d, i) { return fill(i); })
+                            .attr("text-anchor", "middle")
+                            .attr("transform", function(d) {
+                                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                            })
+                            .text(function(d) { return d.text; })
+                    }
+                }
+            }
+        );
+    }
+    runQueryAndDrawWordCloud();
+
 </script>
-
-
-
