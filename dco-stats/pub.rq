@@ -7,7 +7,7 @@ PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX vivo: <http://vivoweb.org/ontology/core#>
 
-select ?type ?title ?contrib ?dcoId ?year ?doi ?journal (GROUP_CONCAT(distinct ?inner_label; separator=';') as ?Authors) (GROUP_CONCAT(distinct ?comms_l; separator=';') as ?Communities) (GROUP_CONCAT(distinct ?teams_l; separator=';') as ?Teams) where
+select ?type ?title ?contrib ?dcoId ?year ?doi ?journal ?volume ?issue ?pagestart ?pageend (GROUP_CONCAT(distinct ?inner_label; separator=';') as ?Authors) (GROUP_CONCAT(distinct ?comms_l; separator=';') as ?Communities) (GROUP_CONCAT(distinct ?teams_l; separator=';') as ?Teams) where
 {
   <URI> vitro:mostSpecificType ?t .
   ?t rdfs:label ?type .
@@ -28,4 +28,7 @@ select ?type ?title ?contrib ?dcoId ?year ?doi ?journal (GROUP_CONCAT(distinct ?
   OPTIONAL { <URI> dco:associatedDCOTeam ?teams . ?teams rdfs:label ?teams_l . }
   OPTIONAL { <URI> bibo:doi ?doi }
   OPTIONAL { <URI> dco:hasDcoId ?dcoId }
-} GROUP BY ?type ?title ?contrib ?doi ?journal ?year ?doi ?dcoId
+  OPTIONAL { <URI> bibo:pageStart ?pagestart . <URI> bibo:pageEnd ?pageend . }
+  OPTIONAL { <URI> bibo:volume ?volume }
+  OPTIONAL { <URI> bibo:issue ?issue }
+} GROUP BY ?type ?title ?contrib ?doi ?journal ?year ?doi ?dcoId ?volume ?issue ?pagestart ?pageend
