@@ -25,7 +25,14 @@ baseQuery = ""\
 "  ?person <http://vivo.mydomain.edu/ns#networkId> ?uid .\n"\
 "  FILTER (str(?uid)=\"UID\")\n"\
 "  ?person rdfs:label ?name .\n"\
-"  OPTIONAL { ?person dco:associatedDCOCommunity ?comm . ?comm rdfs:label ?comm_l . }\n"\
+"  OPTIONAL { ?person obo:RO_0000053 ?commrole .\n"\
+"             ?commrole a vivo:MemberRole .\n"\
+"             OPTIONAL { ?commrole vivo:dateTimeInterval ?comminterval .\n"\
+"                                  ?comminterval vivo:end ?commend .}\n"\
+"             FILTER( ! BOUND(?commend))\n"\
+"             ?commrole vivo:roleContributesTo ?comm .\n"\
+"             ?comm a dco:ResearchCommunity .\n"\
+"             ?comm rdfs:label ?comm_l . }\n"\
 "  OPTIONAL { ?person obo:RO_0000053 ?teamrole .\n"\
 "             ?teamrole a vivo:MemberRole .\n"\
 "             OPTIONAL { ?teamrole vivo:dateTimeInterval ?interval .\n"\
