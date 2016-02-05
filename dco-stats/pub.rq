@@ -7,7 +7,7 @@ PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX vivo: <http://vivoweb.org/ontology/core#>
 
-select ?type ?title ?contrib ?dcoId ?year ?doi ?journal (GROUP_CONCAT(distinct ?inner_label; separator=';') as ?Authors) (GROUP_CONCAT(distinct ?comms_l; separator=';') as ?Communities) (GROUP_CONCAT(distinct ?teams_l; spearator=';') as ?Teams) where
+select ?type ?title ?contrib ?dcoId ?year ?doi ?journal (GROUP_CONCAT(distinct ?inner_label; separator=';') as ?Authors) (GROUP_CONCAT(distinct ?comms_l; separator=';') as ?Communities) (GROUP_CONCAT(distinct ?teams_l; separator=';') as ?Teams) where
 {
   <URI> vitro:mostSpecificType ?t .
   ?t rdfs:label ?type .
