@@ -1,35 +1,24 @@
 #!/bin/sh
 
-statsdir=$1
-if [ "$statsdir" = "" ]
+workdir=/opt/backups/stats
+if [ "$1" != "" ]
 then
-    echo "Usage: $0 <statsdir>"
-    exit 1
+    workdir=$1
 fi
 
-if [ ! -d $statsdir ]
-then
-    echo "Directory \"$statsdir\" does not exist"
-    echo "Usage: $0 <statsdir>"
-    exit 1
-fi
-
-cd $statsdir
-outfile="newinstances"
+outfile="${workdir}/newinstances"
 echo "" > $outfile
+scriptdir=`dirname $0`
 for i in ds fs instr person proj pu pub
 do
-    script="${i}Stats.py"
-    echo $script
-    python3 $script --base=$statsdir >> $outfile
+    script="${scriptdir}/${i}Stats.py"
+    python3 ${script} --base $workdir >> $outfile
 done
 
-echo "drupal users"
-python3 drupalUsers.py >> $outfile
-echo "" >> $outfile
+script="${scriptdir}/drupalUsers.py"
+python3 $script >> $outfile
 
-echo "vivo users"
-python3 vivoUsers.py >> $outfile
-echo "" >> $outfile
+script="${scriptdir}/vivoUsers.py"
+python3 $script >> $outfile
 
 mailx -s "NewObjs on deepcarbon" westp@rpi.edu < ${outfile}
