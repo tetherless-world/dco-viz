@@ -55,21 +55,21 @@ $ptr->close();
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title> - jsFiddle demo</title>
-  
+
   <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
-  
-  
-  
-  
+
+
+
+
   <link rel="stylesheet" type="text/css" href="/dco-viz/css/result-light.css">
-  
+
   <style type='text/css'>
-    
+
   </style>
-  
 
 
-<script type='text/javascript'>//<![CDATA[ 
+
+<script type='text/javascript'>//<![CDATA[
 
 $(function () {
     $('#container').highcharts({
@@ -107,7 +107,7 @@ $(function () {
             align: 'right',
             verticalAlign: 'top',
             x: -40,
-            y: 80,
+            y: 20,
             floating: true,
             borderWidth: 1,
             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
@@ -131,7 +131,7 @@ $(function () {
         }]
     });
 });
-//]]>  
+//]]>
 
 </script>
 
@@ -143,7 +143,7 @@ $(function () {
 
 <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
-  
+
 </body>
 
 
