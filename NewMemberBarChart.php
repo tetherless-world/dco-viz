@@ -54,7 +54,7 @@ $ptr->close();
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title> - jsFiddle demo</title>
+  <title> New Members Bar Chart </title>
 
   <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
 
