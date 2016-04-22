@@ -34,44 +34,80 @@
     height: 100%;
   }
 
+  #nav {
+    width: 100%;
+  }
+
 </style>
 
 <body>
   <div id="container">
     <div id="slideshow">
-      <div>
+      <div id="1">
         <iframe src="PubWordCloud.html"></iframe>
        </div>
-       <div>
+       <div id="2">
          <iframe src="AreasWordCloud.html"></iframe>
        </div>
-       <div>
+       <div id="3">
          <iframe src="PieChartPublications.html"></iframe>
        </div>
-       <div>
+       <div id="4">
          <iframe src="PieChart.html"></iframe>
        </div>
-       <div>
+       <div id="5">
          <iframe src="NewMemberBarChart.php"></iframe>
        </div>
-       <div>
+       <div id="6">
          <iframe src="TotalMemberTimeSeries.php"></iframe>
        </div>
     </div>
+    <span id="nav">
+        <button id="back"><</button>
+        <button id="forward">></button>
+    </span>
   </div>
 </body>
 
 <script type="text/javascript">
 
-  $("#slideshow > div:gt(0)").hide();
+    $("#slideshow > div:gt(0)").hide();
 
-  setInterval(function() {
-    $('#slideshow > div:first')
-      .fadeOut(500)
-      .next()
-      .fadeIn(500)
-      .end()
-      .appendTo('#slideshow');
-  },  8000);
+        sessionStorage.setItem("current",0);
+
+        setInterval(function() {
+            $('#slideshow > div:first')
+                .fadeOut(10)
+                .next()
+                .fadeIn(10)
+                .end()
+                .appendTo('#slideshow');
+        },  6000);
+
+        $("#forward").click(function() {
+
+            $('#slideshow > div:first')
+                .fadeOut(10)
+                .next()
+                .fadeIn(10)
+                .end()
+                .appendTo('#slideshow');
+
+        });
+
+        $("#back").click(function() {
+
+            $('#slideshow > div').filter(":last")
+                .fadeOut(10)
+                .next()
+                .fadeIn(10)
+                .end()
+                .prependTo('#slideshow');
+
+            $("#slideshow > div").filter(":eq(0)").show();
+
+            $("#slideshow > div").filter(":gt(0)").hide();
+
+        });
 
 </script>

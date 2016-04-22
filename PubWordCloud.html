@@ -16,8 +16,11 @@
                 url: theQueryRSJSON,
                 dataType: 'json',
                 success: function(data) {
-                    console.log("Success in getting query result! Now continue to parse the result...");
+                    // console.log("Success in getting query result! Now continue to parse the result...");
                     theQueryResult=data;
+                    // theQueryResult=data.subjectAreas;
+                    // console.log(theQueryResult);
+
                     for (var i=0; i<theQueryResult.results.bindings.length; i++){
                         var item = {text: theQueryResult.results.bindings[i].subjectArea.value,
                             link: theQueryResult.results.bindings[i].subjectAreaUri.value,
