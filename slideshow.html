@@ -34,7 +34,14 @@
     height: 100%;
   }
 
+  #slideshow > div > a {
+      margin: 1%;
+    float: right;
+  }
+
+
   #nav {
+    margin: 1%;
     width: 100%;
   }
 
@@ -45,69 +52,111 @@
     <div id="slideshow">
       <div id="1">
         <iframe src="PubWordCloud.html"></iframe>
+        <a target="_blank" href="PubWordCloud.html">Publication Subject Areas Word Cloud</a>
        </div>
        <div id="2">
          <iframe src="AreasWordCloud.html"></iframe>
+         <a target="_blank" href="AreasWordCloud.html">DCO Expertise Areas Word Cloud</a>
        </div>
        <div id="3">
          <iframe src="PieChartPublications.html"></iframe>
+         <a target="_blank" href="PieChartPublications.html">Publications by Community</a>
        </div>
        <div id="4">
          <iframe src="PieChart.html"></iframe>
+         <a target="_blank" href="PieChart.html">New Members by Community</a>
        </div>
        <div id="5">
          <iframe src="NewMemberBarChart.php"></iframe>
+         <a target="_blank" href="NewMemberBarChart.php">New Members Bar Chart</a>
        </div>
        <div id="6">
          <iframe src="TotalMemberTimeSeries.php"></iframe>
+         <a target="_blank" href="TotalMemberTimeSeries.php">New Members Time Series</a>
        </div>
     </div>
-    <span id="nav">
-        <button id="back"><</button>
-        <button id="forward">></button>
-    </span>
+    <div id="nav">
+        <button id="back"><<</button>
+        <button id="pause">></button>
+        <button id="forward">>></button>
+    </div>
   </div>
 </body>
 
 <script type="text/javascript">
 
+    function slideShow() {
+        var timer,obj;
+
+        obj = {}
+        obj.resume = function() {
+            timerOn = true;
+            timer =
+                setInterval(obj.step, 7000);
+        };
+        obj.pause = function() {
+            clearInterval(timer);
+        };
+
+        obj.step = function() {
+            $('#slideshow > div:first')
+                .fadeOut(100)
+                .next()
+                .fadeIn(100)
+                .end()
+                .appendTo('#slideshow');
+        };
+        obj.resume();
+        return obj;
+
+    }
+
     $("#slideshow > div:gt(0)").hide();
 
-        sessionStorage.setItem("current",0);
+    var slideShow = slideShow();
 
-        setInterval(function() {
-            $('#slideshow > div:first')
-                .fadeOut(10)
-                .next()
-                .fadeIn(10)
-                .end()
-                .appendTo('#slideshow');
-        },  6000);
+    $("#forward").click(function() {
 
-        $("#forward").click(function() {
+        $('#slideshow > div:first')
+            .fadeOut(100)
+            .next()
+            .fadeIn(100)
+            .end()
+            .appendTo('#slideshow');
 
-            $('#slideshow > div:first')
-                .fadeOut(10)
-                .next()
-                .fadeIn(10)
-                .end()
-                .appendTo('#slideshow');
+    });
 
-        });
+    $("#back").click(function() {
 
-        $("#back").click(function() {
+        $('#slideshow > div').filter(":last")
+            .fadeOut(100)
+            .next()
+            .fadeIn(100)
+            .end()
+            .prependTo('#slideshow');
 
-            $('#slideshow > div').filter(":last")
-                .fadeOut(10)
-                .next()
-                .fadeIn(10)
-                .end()
-                .prependTo('#slideshow');
+        $("#slideshow > div").filter(":eq(0)").show();
 
-            $("#slideshow > div").filter(":eq(0)").show();
+        $("#slideshow > div").filter(":gt(0)").hide();
 
-            $("#slideshow > div").filter(":gt(0)").hide();
+    });
 
-        });
+    $("#pause").click(function() {
+
+        if ($("#pause").text() == ">") {
+
+            console.log('ll');
+            slideShow.pause();
+            $("#pause").html("ll");
+        } else {
+            console.log('>');
+            slideShow.resume();
+            $("#pause").html(">");
+        }
+
+
+
+    });
+
 
 </script>
