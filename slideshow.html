@@ -77,7 +77,7 @@
     </div>
     <div id="nav">
         <button id="back"><<</button>
-        <button id="pause">></button>
+        <button id="pause">ll</button>
         <button id="forward">>></button>
     </div>
   </div>
@@ -143,15 +143,15 @@
 
     $("#pause").click(function() {
 
-        if ($("#pause").text() == ">") {
+        if ($("#pause").text() == "ll") {
 
             console.log('ll');
             slideShow.pause();
-            $("#pause").html("ll");
+            $("#pause").html(">");
         } else {
             console.log('>');
             slideShow.resume();
-            $("#pause").html(">");
+            $("#pause").html("ll");
         }
 
 
