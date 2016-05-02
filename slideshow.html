@@ -3,6 +3,9 @@
 <meta charset="utf-8">
 
 <script src="js/jquery-2.1.4.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script src="js/d3.layout.cloud.js"></script>
+<script src="js/d3pie.min.js"></script>
 
 <style>
 
@@ -49,27 +52,480 @@
 <body>
   <div id="container">
     <div id="slideshow">
-      <div class="slide">
-        <iframe src="PubWordCloud.html" scrolling="no"></iframe>
-        <a target="_blank" href="PubWordCloud.html">Publication Subject Areas Word Cloud</a>
+      <div class="slide" id="slide1">
+          <script type="text/javascript">
+            var subjectAreasUrl = "statsJSON/subjectAreas.json";
+            var theQueryResult;
+            var subjectAreas = [];
+              function runQueryAndDrawWordCloud(){
+                  jQuery.ajax(
+                      {
+                          type: 'GET',
+                          url: subjectAreasUrl,
+                          dataType: 'json',
+                          success: function(data) {
+                              // console.log("Success in getting query result! Now continue to parse the result...");
+                              theQueryResult=data;
+                              // theQueryResult=data.subjectAreas;
+                              // console.log(theQueryResult);
+
+                              for (var i=0; i<theQueryResult.results.bindings.length; i++){
+                                  var item = {text: theQueryResult.results.bindings[i].subjectArea.value,
+                                      link: theQueryResult.results.bindings[i].subjectAreaUri.value,
+                                      size: Number(theQueryResult.results.bindings[i].count.value),};
+                                  subjectAreas.push(item);
+
+                                }
+
+                              var fill = d3.scale.category20();
+
+                              var layout =
+                                       d3.layout.cloud()
+                                           .size([750, 500])
+                                           .words(subjectAreas)
+                                           .padding(1)
+                                           .rotate(function() { return 0; })
+                                           .font("Impact")
+                                           //.fontSize(function(d) { return Math.pow(d.size,1.7); })
+                                           //subject area counts low so set to *10 for now
+                                           .fontSize(function(d) { return d.size*10 })
+                                           .on("end", draw);
+                              layout.start();
+
+                              function draw(words) {
+                                  d3.select("#slide1").append("svg")
+                                      .attr("width", layout.size()[0])
+                                      .attr("height", layout.size()[1])
+                                      .attr("xmlns/:xlink", "http://www.w3.org/1999/xlink")
+                                      .append("g")
+                                      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                                      .selectAll("text")
+                                      .data(words)
+                                      .enter()
+                                      .append("a")
+                                      .attr("xlink:href", function(d) { return d.link; })
+                                      .attr("target", "_blank")
+                                      .append("text")
+                                      .style("font-size", function(d) { return d.size + "px"; })
+                                      .style("font-family", "Impact")
+                                      .style("fill", function(d, i) { return fill(i); })
+                                      .attr("text-anchor", "middle")
+                                      .attr("transform", function(d) {
+                                          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                                      })
+                                      .text(function(d) { return d.text; })
+                              }
+                          }
+                      }
+                  );
+              }
+              runQueryAndDrawWordCloud();
+          </script>
+        <!-- <iframe src="PubWordCloud.html" scrolling="no"></iframe>
+        <a target="_blank" href="PubWordCloud.html">Publication Subject Areas Word Cloud</a> -->
        </div>
-       <div class="slide">
-         <iframe src="AreasWordCloud.html" scrolling="no"></iframe>
-         <a target="_blank" href="AreasWordCloud.html">DCO Expertise Areas Word Cloud</a>
+       <div id="slide2">
+           <script type="text/javascript">
+                var expertiseAreasUrl = "statsJSON/expertiseAreas.json";
+                var theQueryResult;
+                var leaders = [];   // emtry array to put in the data
+                function runQueryAndDrawWordCloud(){
+                   jQuery.ajax(
+                       {
+                           type: 'GET',
+                           url: expertiseAreasUrl,
+                           dataType: 'json',
+                           success: function(data) {
+                               // console.log("Success in getting query result! Now continue to parse the result...");
+                               theQueryResult=data;
+                               // theQueryResult=data.expertiseAreas;
+                               // console.log(theQueryResult);
+
+                               for (var i=0; i<theQueryResult.results.bindings.length; i++){
+                                   var item = {text: theQueryResult.results.bindings[i].expertiseName.value,
+                                       link: theQueryResult.results.bindings[i].expertiseUri.value,
+                                       size: Number(theQueryResult.results.bindings[i].count.value),};
+                                   leaders.push(item);
+                               }
+
+                               var fill = d3.scale.category20();
+                               var layout =
+                                       d3.layout.cloud()
+                                               .size([750, 500])
+                                               .words(leaders)
+                                               .padding(5)
+                                               .rotate(function() { return ~~(Math.random() * 2) * 45; })
+                                               .font("Impact")
+                                               .fontSize(function(d) { return d.size; })
+                                               .on("end", draw);
+                               layout.start();
+                               function draw(words) {
+                                   d3.select("#slide2").append("svg")
+                                       .attr("width", layout.size()[0])
+                                       .attr("height", layout.size()[1])
+                                       .attr("xmlns/:xlink", "http://www.w3.org/1999/xlink")
+                                       .append("g")
+                                       .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                                       .selectAll("text")
+                                       .data(words)
+                                       .enter()
+                                       .append("a")
+                                       .attr("xlink:href", function(d) { return d.link; })
+                                       .attr("target", "_blank")
+                                       .append("text")
+                                       .style("font-size", function(d) { return d.size + "px"; })
+                                       .style("font-family", "Impact")
+                                       .style("fill", function(d, i) { return fill(i); })
+                                       .attr("text-anchor", "middle")
+                                       .attr("transform", function(d) {
+                                           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                                       })
+                                       .text(function(d) { return d.text; });
+                               }
+                           }
+                       }
+                   );
+                }
+                runQueryAndDrawWordCloud();
+           </script>
+         <!-- <iframe src="AreasWordCloud.html" scrolling="no"></iframe>
+         <a target="_blank" href="AreasWordCloud.html">DCO Expertise Areas Word Cloud</a> -->
        </div>
-       <div class="slide">
-         <iframe src="PieChartPublications.html" scrolling="no"></iframe>
-         <a target="_blank" href="PieChartPublications.html">Publications by Community</a>
+       <div class="slide" id="slide3">
+           <script type="text/javascript">
+                var pubCountUrl = "statsJSON/communityPubCounts.json";
+                var commNumbers = [];
+                var commNames = [];
+                var peopleCounts = [];
+                // FIXME: we need to add more colors in case there's more communities.
+                var colors = [ "#0c6197", "#248838", "#e98125", "#923e99", "#00fbe4", "#eb0ddc", "#f3f10b", "#990000", "#000000", "#515151"  ];
+
+                var button = $('<button id="moreInfo">More Information</button>');
+                $("#slide3").append(button)
+                moreInfo.onclick = function()
+                {
+                	var segment = pie.getOpenSegment();
+                	if(segment === null)
+                	{
+                		alert("Please click on a piece of the pie, then re-click the button.");
+                	}
+                	else
+                	{
+                		var i = segment.data.num;
+                		var name = commNames[i];
+                		var publications = segment.data.value;
+                		alert("The " + name + " has " + publications + " publications and " + peopleCounts[commNames[i]] + " members." );
+                	}
+                };
+
+                function openURL(link)
+                {
+                $.ajax({
+                	dataType: "json",
+                	url: link,
+                	success: function(data) {
+                	for(var i = 0; i < data.results.bindings.length; i++)
+                	{
+                		peopleCounts[data.results.bindings[i].dcocommname.value] = parseInt(data.results.bindings[i].number.value);
+                	}
+                	}
+                	});
+                }
+
+                // pplCount = 	'https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0A%0D%0A%23This+query+gets+the+names+of+each+DCO+community+and+counts+the+number+of+users+in+%0D%0A%23each+community%0D%0ASELECT+%3Fdcocommname+%28COUNT%28%3Fuser%29+as+%3Fnumber%29+WHERE%0D%0A%7B%0D%0A%3Fuser+a+foaf%3APerson%3B%0D%0A+++++++++%3Chttp%3A%2F%2Fvivo.mydomain.edu%2Fns%23networkId%3E+%3FnetID%3B%0D%0A+++++++++dco%3AassociatedDCOCommunity+%3Fdcocomm.%0D%0A%3Fdcocomm+rdfs%3Alabel+%3Fdcocommname.%0D%0A%7D%0D%0AGROUP+BY+%3Fdcocommname&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV'
+                // pubCount =  "https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+bibo%3A+%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E%0D%0A%0D%0A%23%0D%0A%23Counts+the+number+of+publications+on+the+DCO+website%0D%0A%23Sorts+the+publications+by+DCO+community%0D%0A%23%0D%0ASELECT+%3Fdcocommname+%28COUNT%28%3Fpublication%29+as+%3Fnumber%29+WHERE%0D%0A%7B%0D%0A%7B+%3Fpublication+a+bibo%3AArticle+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ABook+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ADocumentPart+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+dco%3APoster+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3AThesis+.+%7D%0D%0A%3Fpublication+dco%3AassociatedDCOCommunity+%3Fdcocomm.%0D%0A%3Fdcocomm+rdfs%3Alabel+%3Fdcocommname.%0D%0A%7D%0D%0AGROUP+BY+%3Fdcocommname&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV"
+                pubCount = "statsJSON/communityPubCounts.json";
+                // pubCount = "statsJSON/dcoStats.json";
+
+                $.ajax({
+                	dataType: "json",
+                	url: pubCountUrl,
+                	success: function(data) {
+                        // theQueryResult = data.communityPubCounts;
+                        theQueryResult = data;
+                		for(var i = 0; i < theQueryResult.results.bindings.length; i++)
+                		{
+                			updateNumbers(parseInt(theQueryResult.results.bindings[i].number.value));
+                			updateNames(theQueryResult.results.bindings[i].dcocommname.value);
+                		}
+
+                		pie = generateChart(commNames, commNumbers);
+                		//Opens the people count and stores results in peopleCounts
+                		// openURL(pplCount)
+                	}
+                });
+
+                function updateNumbers(number) {
+                	commNumbers.push(number);
+                };
+
+                function updateNames(name) {
+                	commNames.push(name);
+                };
+
+                //Right now, the full names stored in commNames are not used because some are too big
+                //to fit onscreen. However, they are still stored for use in other queries.
+                function generateChart(commNames, commNumbers) {
+                	var json = {
+                		"header": {
+                			"title": {
+                				"text": "Publications Sorted by Affiliated Community",
+                				"fontSize": 24,
+                				"font": "open sans"
+                			},
+                			"subtitle": {
+                				"text": "Deep Carbon Observatory",
+                				"color": "#999999",
+                				"fontSize": 16,
+                				"font": "open sans"
+                			},
+                			"titleSubtitlePadding": 9
+                		},
+                		"footer": {
+                			"color": "#999999",
+                			"fontSize": 10,
+                			"font": "open sans",
+                			"location": "bottom-left"
+                		},
+                		"size": {
+                			"canvasWidth": 590,
+                			"pieInnerRadius": "35%",
+                			"pieOuterRadius": "90%"
+                		},
+                		"data": {
+                			"content": [
+                			]
+                		},
+                		"labels": {
+                			"outer": {
+                				"pieDistance": 32
+                			},
+                			"inner": {
+                				"hideWhenLessThanPercentage": 3
+                			},
+                			"mainLabel": {
+                				"fontSize": 11
+                			},
+                			"percentage": {
+                				"color": "#ffffff",
+                				"decimalPlaces": 1
+                			},
+                			"value": {
+                				"color": "#adadad",
+                				"fontSize": 11
+                			},
+                			"lines": {
+                				"enabled": true
+                			},
+                			"truncation": {
+                				"enabled": true
+                			}
+                		},
+                		"effects": {
+                			"pullOutSegmentOnClick": {
+                				"effect": "linear",
+                				"speed": 400,
+                				"size": 16
+                			}
+                		},
+                		"misc": {
+                			"gradient": {
+                				"enabled": true,
+                				"percentage": 100
+                			}
+                		}
+                	};
+
+                    // we now have the basic structure and can add the data returned from the first query
+                    for( var i = 0; i < commNames.length; i++ )
+                    {
+                        json.data.content.push( {
+                            "label": commNames[i],
+                            "value": commNumbers[i],
+                            "color": colors[i],
+                            "num": i
+                        } );
+                    }
+
+                    return new d3pie("#slide3",json);
+                };
+
+
+            </script>
+         <!-- <iframe src="PieChartPublications.html" scrolling="no"></iframe>
+         <a target="_blank" href="PieChartPublications.html">Publications by Community</a> -->
        </div>
-       <div class="slide">
-         <iframe src="PieChart.html" scrolling="no"></iframe>
-         <a target="_blank" href="PieChart.html">New Members by Community</a>
+       <div class="slide" id="slide4">
+           <script type="text/javascript">
+                var commNumbers = [];
+                var commNames = [];
+                var publicationCounts = [];
+                // FIXME: we need to add more colors in case there's more communities.
+                var colors = [ "#0c6197", "#248838", "#e98125", "#923e99", "#00fbe4", "#eb0ddc", "#f3f10b", "#990000", "#000000", "#515151"  ];
+
+                var button = $('<button id="moreInfo">More Information</button>');
+                $("#slide4").append(button)
+                moreInfo.onclick = function()
+                {
+                	var segment = pie.getOpenSegment();
+                	if(segment === null)
+                	{
+                		alert("Please click on a piece of the pie, then re-click the button.");
+                	}
+                	else
+                	{
+                		var i = segment.data.num;
+                		var name = commNames[i];
+                		var members = segment.data.value;
+                		alert("The " + name + " has " + members + " members and " + publicationCounts[commNames[i]] + " publications." );
+                	}
+                };
+
+                function openURL(link)
+                {
+                $.ajax({
+                	dataType: "json",
+                	url: link,
+                	success: function(data) {
+                	for(var i = 0; i < data.results.bindings.length; i++)
+                	{
+                       // we know the dcocommname from the first query that grabs member counts for the communities
+                       // so we can use key/value paris in publicationCounts to store the number of publications
+                       // for that community. This is instead of relying on ordering of the second query results to be
+                       // the same as the first query results.
+                		publicationCounts[data.results.bindings[i].dcocommname.value] = parseInt(data.results.bindings[i].number.value);
+                	}
+                	}
+                	});
+                }
+
+                $.ajax({
+                	dataType: "json",
+                   // url: "statsJSON/dcoStats.json",
+                   url: "statsJSON/communityMemberCounts1.json",
+                   //url: 'https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+vivo%3A+%3Chttp%3A%2F%2Fvivoweb.org%2Fontology%2Fcore%23%3E%0D%0A%0D%0A%23This+query+gets+the+names+of+each+DCO+community+and+counts+the+number+of+users+in+%0D%0A%23each+community%0D%0ASELECT+%3Fdcocommname+%28COUNT%28%3Fuser%29+as+%3Fnumber%29+WHERE%0D%0A%7B%0D%0A++++%3Fuser+a+foaf%3APerson+.%0D%0A+++++%3Fuser+%3Chttp%3A%2F%2Fvivo.mydomain.edu%2Fns%23networkId%3E+%3FnetID+.%0D%0A+++++%3Fuser+obo%3ARO_0000053+%3Fcommrole+.%0D%0A+++++%3Fcommrole+a+vivo%3AMemberRole+.%0D%0A++++OPTIONAL+%7B+%3Fcommrole+vivo%3AdateTimeINterval+%3Finterval+.%0D%0A+++++++++++++++++++++++++%3Finterval+vivo%3Aend+%3Fend+.+%7D%0D%0A++++FILTER%28%21BOUND%28%3Fend%29%29%0D%0A++++%3Fcommrole+vivo%3AroleContributesTo+%3Fdco_community+.%0D%0A++++%3Fdco_community+a+dco%3AResearchCommunity+.%0D%0A++++%3Fdco_community+rdfs%3Alabel+%3Fdcocommname+.%0D%0A%7D%0D%0AGROUP+BY+%3Fdcocommname%0D%0A&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV',
+                	success: function(data) {
+                       // theQueryResult = data.communityMemberCounts1;
+                       theQueryResult = data;
+                       // console.log(theQueryResult);
+
+                		for(var i = 0; i < theQueryResult.results.bindings.length; i++)
+                		{
+                			updateNumbers(parseInt(theQueryResult.results.bindings[i].number.value));
+                			updateNames(theQueryResult.results.bindings[i].dcocommname.value);
+                		}
+
+                		pie = generateChart(commNames,commNumbers);
+                		//Opens the publication count first and stores results in publicationCounts
+                       openURL("statsJSON/communityMemberCounts2.json");
+                       //openURL("https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+bibo%3A+%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E%0D%0A%0D%0A%23%0D%0A%23Counts+the+number+of+publications+on+the+DCO+website%0D%0A%23Sorts+the+publications+by+DCO+community%0D%0A%23%0D%0ASELECT+%3Fdcocommname+%28COUNT%28%3Fpublication%29+as+%3Fnumber%29+WHERE%0D%0A%7B%0D%0A%7B+%3Fpublication+a+bibo%3AArticle+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ABook+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3ADocumentPart+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+dco%3APoster+.+%7D+%0D%0AUNION+%7B+%3Fpublication+a+bibo%3AThesis+.+%7D%0D%0A%3Fpublication+dco%3AassociatedDCOCommunity+%3Fdcocomm.%0D%0A%3Fdcocomm+rdfs%3Alabel+%3Fdcocommname.%0D%0A%7D%0D%0AGROUP+BY+%3Fdcocommname&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV");
+                	}
+                });
+
+                function updateNumbers(number) {
+                	commNumbers.push(number);
+                };
+
+                function updateNames(name) {
+                	commNames.push(name);
+                };
+
+                //Right now, the full names stored in commNames are not used because some are too big
+                //to fit onscreen. However, they are still stored for use in other queries.
+                function generateChart(commNames,commNumbers) {
+                   var json = {
+                		"header": {
+                			"title": {
+                				"text": "Members Sorted by Affiliated Community",
+                				"fontSize": 24,
+                				"font": "open sans"
+                			},
+                			"subtitle": {
+                				"text": "Deep Carbon Observatory",
+                				"color": "#999999",
+                				"fontSize": 16,
+                				"font": "open sans"
+                			},
+                			"titleSubtitlePadding": 9
+                		},
+                		"footer": {
+                			"color": "#999999",
+                			"fontSize": 10,
+                			"font": "open sans",
+                			"location": "bottom-left"
+                		},
+                		"size": {
+                			"canvasWidth": 590,
+                			"pieInnerRadius": "35%",
+                			"pieOuterRadius": "90%"
+                		},
+                		"data": {
+                			"sortOrder": "label-desc",
+                			"content": [
+                			]
+                		},
+                		"labels": {
+                			"outer": {
+                				"pieDistance": 32
+                			},
+                			"inner": {
+                				"hideWhenLessThanPercentage": 3
+                			},
+                			"mainLabel": {
+                				"fontSize": 11
+                			},
+                			"percentage": {
+                				"color": "#ffffff",
+                				"decimalPlaces": 1
+                			},
+                			"value": {
+                				"color": "#adadad",
+                				"fontSize": 11
+                			},
+                			"lines": {
+                				"enabled": true
+                			},
+                			"truncation": {
+                				"enabled": false
+                			}
+                		},
+                		"effects": {
+                			"pullOutSegmentOnClick": {
+                				"effect": "linear",
+                				"speed": 400,
+                				"size": 16
+                			}
+                		},
+                		"misc": {
+                			"gradient": {
+                				"enabled": true,
+                				"percentage": 100
+                			}
+                		}
+                   };
+
+                   // we now have the basic structure and can add the data returned from the first query
+                   for( var i = 0; i < commNames.length; i++ )
+                   {
+                       json.data.content.push( {
+                           "label": commNames[i],
+                           "value": commNumbers[i],
+                           "color": colors[i],
+                           "num": i
+                       } );
+                   }
+
+                   return new d3pie("#slide4",json);
+                };
+            </script>
+         <!-- <iframe src="PieChart.html" scrolling="no"></iframe>
+         <a target="_blank" href="PieChart.html">New Members by Community</a> -->
        </div>
-       <div class="slide">
+       <div class="slide" id="slide5">
          <iframe src="NewMemberBarChart.php" scrolling="no"></iframe>
          <a target="_blank" href="NewMemberBarChart.php">New Members Bar Chart</a>
        </div>
-       <div class="slide">
+       <div class="slide" id="slide6">
          <iframe src="TotalMemberTimeSeries.php" scrolling="no"></iframe>
          <a target="_blank" href="TotalMemberTimeSeries.php">New Members Time Series</a>
        </div>
@@ -152,10 +608,5 @@
             slideShow.resume();
             $("#pause").html("ll");
         }
-
-
-
     });
-
-
 </script>
