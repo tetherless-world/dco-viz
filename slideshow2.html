@@ -1,6 +1,7 @@
 <!-- Prototype visualization slideshow -->
 <!DOCTYPE html>
-<html><head>
+<html>
+<head>
 <meta charset="utf-8">
 
 <script src="js/jquery-2.1.4.js"></script>
@@ -31,15 +32,14 @@
 
   #container {
     margin: 50px auto;
-    width: 800px;
-    height: 520px;
-
+    width: 500px;
+    height: 280px;
   }
 
   #slideshow {
     position: relative;
-    width: 95%;
-    height: 95%;
+    width: 500px;
+    height: 280px;
     padding: 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
   }
@@ -55,8 +55,8 @@
 
 
   #slideshow > div > iframe {
-    width:750px;
-    height:490px
+    width:500px;
+    height:280px
   }
 
   #slideshow > div > a {
@@ -70,6 +70,7 @@
   }
 
 </style>
+
 </head>
 
 <body>
@@ -83,7 +84,7 @@
             <div class="slide">
                 <div id="slide1">
                     <script type="text/javascript">
-                        expertiseWordCloud("#slide1",720,440);
+                        expertiseWordCloud("#slide1",500,255);
                     </script>
                 </div>
                 <span class="caption">This word cloud represents keywords found in publications contributed to the DCO. Pause the slide show to examine further by clicking on one of the words. <a target="_blank" href="PubWordCloud.html">Click to enlarge Cloud</a>.</span>
@@ -91,7 +92,7 @@
             <div class="slide">
                 <div id="slide2">
                     <script type="text/javascript">
-                        pubWordCloud("#slide2",720,440);
+                        pubWordCloud("#slide2",500,255);
                     </script>
                 </div>
                 <span class="caption">This word cloud represents areas of expertise of the various members of the DCO community. Pause the slide show to examine further by clicking on one of the words. <a target="_blank" href="AreasWordCloud.html">Click to enlarge Cloud</a>.</span>
@@ -99,7 +100,7 @@
             <div class="slide">
                 <div id="slide3">
                     <script type="text/javascript">
-                        commPubCounts("#slide3",580,460);
+                        commPubCounts("#slide3",500,225);
                     </script>
                 </div>
                 <span class="caption">This chart represents the number of publications per science community. Pause the slide show to examine further by click on a part of the chart and then clicking more information. <a target="_blank" href="PieChartPublications.html">Click to enlarge Chart</a>.</span>
@@ -107,7 +108,7 @@
             <div class="slide">
                 <div id="slide4">
                     <script type="text/javascript">
-                        commMemberCounts("#slide4",580,460);
+                        commMemberCounts("#slide4",500,225);
                     </script>
                 </div>
                 <span class="caption">This chart represents the number of members of the DCO per science community. Pause the slide show to examine further by click on a part of the chart and then clicking more information. <a target="_blank" href="PieChart.html">Click to enlarge Chart</a>.</span>
@@ -122,6 +123,7 @@
             </div>
         </div> <!--slideshow-->
     </div> <!--container-->
+
 </body>
 
 <script type="text/javascript">
