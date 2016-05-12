@@ -51,6 +51,11 @@
     left: 10px;
     right: 10px;
     bottom: 10px;
+    display: none;
+  }
+
+  #slideshow > div:first{
+
   }
 
 
@@ -131,6 +136,9 @@
     function slideShow() {
         var timer,obj;
 
+        $("#slideshow > div").filter(":gt(0)").hide();
+        $("#slideshow > div").filter(":eq(0)").show();
+
         obj = {}
         obj.resume = function() {
             timerOn = true;
@@ -143,7 +151,7 @@
 
         obj.step = function() {
             $('#slideshow > div:first')
-                .fadeOut(100)
+                .hide()
                 .next()
                 .fadeIn(100)
                 .end()
@@ -161,7 +169,7 @@
     $("#forward").click(function() {
 
         $('#slideshow > div:first')
-            .fadeOut(100)
+            .hide()
             .next()
             .fadeIn(100)
             .end()
@@ -172,7 +180,7 @@
     $("#back").click(function() {
 
         $('#slideshow > div').filter(":last")
-            .fadeOut(100)
+            .hide()
             .next()
             .fadeIn(100)
             .end()
