@@ -51,13 +51,8 @@
     left: 10px;
     right: 10px;
     bottom: 10px;
-    display: none;
+    /*display: none;*/
   }
-
-  #slideshow > div:first{
-
-  }
-
 
   #slideshow > div > iframe {
     width:500px;
@@ -87,42 +82,42 @@
         </div>
         <div id="slideshow">
             <div class="slide">
-                <div id="slide1">
-                    <script type="text/javascript">
+                <div id="expertiseWordCloud">
+                    <!-- <script type="text/javascript">
                         expertiseWordCloud("#slide1",500,255);
-                    </script>
+                    </script> -->
                 </div>
                 <span class="caption">This word cloud represents keywords found in publications contributed to the DCO. Pause the slide show to examine further by clicking on one of the words. <a target="_blank" href="PubWordCloud.html">Click to enlarge Cloud</a>.</span>
             </div>
             <div class="slide">
-                <div id="slide2">
-                    <script type="text/javascript">
+                <div id="pubWordCloud">
+                    <!-- <script type="text/javascript">
                         pubWordCloud("#slide2",500,255);
-                    </script>
+                    </script> -->
                 </div>
                 <span class="caption">This word cloud represents areas of expertise of the various members of the DCO community. Pause the slide show to examine further by clicking on one of the words. <a target="_blank" href="AreasWordCloud.html">Click to enlarge Cloud</a>.</span>
             </div>
             <div class="slide">
-                <div id="slide3">
-                    <script type="text/javascript">
+                <div id="commPubCounts">
+                    <!-- <script type="text/javascript">
                         commPubCounts("#slide3",500,225);
-                    </script>
+                    </script> -->
                 </div>
                 <span class="caption">This chart represents the number of publications per science community. Pause the slide show to examine further by click on a part of the chart and then clicking more information. <a target="_blank" href="PieChartPublications.html">Click to enlarge Chart</a>.</span>
             </div>
             <div class="slide">
-                <div id="slide4">
-                    <script type="text/javascript">
+                <div id="commMemberCounts">
+                    <!-- <script type="text/javascript">
                         commMemberCounts("#slide4",500,225);
-                    </script>
+                    </script> -->
                 </div>
                 <span class="caption">This chart represents the number of members of the DCO per science community. Pause the slide show to examine further by click on a part of the chart and then clicking more information. <a target="_blank" href="PieChart.html">Click to enlarge Chart</a>.</span>
             </div>
-            <div class="slide" id="slide5">
+            <div class="slide" id="iframe">
                 <iframe src="NewMemberBarChart.php" scrolling="no"></iframe>
                 <span class="caption">This chart represents the number of new members of the DCO over a given period of time. Pause the slide show to examine further. <a target="_blank" href="NewMemberBarChart.php">Click to enlarge Chart</a>.</span>
             </div>
-            <div class="slide" id="slide6">
+            <div class="slide" id="iframe">
                 <iframe src="TotalMemberTimeSeries.php" scrolling="no"></iframe>
                 <span class="caption">This chart represents the number of new members of the DCO over the life of the project. Pause the slide show to examine further. <a target="_blank" href="TotalMemberTimeSeries.php">Click to enlarge Chart</a>.</span>
             </div>
@@ -133,36 +128,73 @@
 
 <script type="text/javascript">
 
+    function drawChart(chartType) {
+        switch (chartType) {
+            case "expertiseWordCloud":
+                expertiseWordCloud("#expertiseWordCloud",500,255);
+                break;
+            case "pubWordCloud":
+                pubWordCloud("#pubWordCloud",500,255);
+                break;
+            case "commPubCounts":
+                commPubCounts("#commPubCounts",500,225);
+                break;
+            case "commMemberCounts":
+                commMemberCounts("#commMemberCounts",500,225);
+                break;
+
+            default:
+
+        }
+    }
+
     function slideShow() {
-        var timer,obj;
+        var timer,obj,interval=1;
+
+        var elementId = $('#slideshow > div:first > div').attr('id');
+        if ( elementId != 'iframe' ) {
+
+            drawChart(elementId);
+        }
 
         $("#slideshow > div").filter(":gt(0)").hide();
+
         $("#slideshow > div").filter(":eq(0)").show();
 
         obj = {}
+
         obj.resume = function() {
             timerOn = true;
             timer =
                 setInterval(obj.step, 7000);
         };
+
         obj.pause = function() {
             clearInterval(timer);
         };
 
         obj.step = function() {
+            interval++;
+
             $('#slideshow > div:first')
                 .hide()
                 .next()
                 .fadeIn(100)
                 .end()
                 .appendTo('#slideshow');
+
+            var elementId = $('#slideshow > div:first > div').attr('id');
+
+            if ( elementId != 'iframe' && interval<7 ) {
+
+                drawChart(elementId);
+            }
         };
+
         obj.resume();
         return obj;
 
     }
-
-    $("#slideshow > div:gt(0)").hide();
 
     var slideShow = slideShow();
 
