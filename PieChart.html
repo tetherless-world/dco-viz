@@ -1,17 +1,32 @@
+<!DOCTYPE HTML>
 <html>
-<script src="js/visualizations.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
-<!-- <script src="js/jquery-1.7.2.min.js"></script> -->
-<script src="js/jquery-2.1.4.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
-<script src="js/d3pie.min.js"></script>
+<head>
+<script src="/dco-viz/js/jquery-2.1.4.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script src="/dco-viz/js/d3.layout.cloud.js"></script>
+<script src="/dco-viz/js/d3pie.min.js"></script>
+<script src="/dco-viz/js/visualizations.js"></script>
 
-<head></head>
+<style>
+
+  span.caption {
+    float:none;
+  }
+
+</style>
+</head>
 <body>
 
-<div id="pieChart"><script type="text/javascript">
-     commMemberCounts("#pieChart",750,500);
- </script></div>
-
+    <div id="container" style="text-align:center;">
+            <div class="slide">
+                <div id="commMemberCounts">
+                    <script type="text/javascript">
+                        commMemberCounts("#commMemberCounts",720,440);
+                    </script>
+                </div>
+                <span class="caption" style="text-align:center;clear:both;">This chart represents the number of members of the DCO per science
+community.<br/>Examine further by clicking on a part of the chart and then clicking more information.
+            </div>
+    </div>
 </body>
 </html>
