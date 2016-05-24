@@ -1,7 +1,7 @@
 // Areas of Expertise Word Cloud
 function expertiseWordCloud(elementId,width,height) {
     // var expertiseAreas = "/dco-viz/statsJSON/expertiseAreas.json";
-    var expertiseAreas = "dco-viz/statsJSON/expertiseAreas.json";
+    var expertiseAreas = "/dco-viz/statsJSON/expertiseAreas.json";
     var theQueryResult;
     var leaders = [];
 
@@ -66,7 +66,7 @@ function expertiseWordCloud(elementId,width,height) {
 // Publications Subject Areas Word Cloud
 function pubWordCloud(elementId,width,height) {
 
-    var subjectAreasUrl = "dco-viz/statsJSON/subjectAreas.json";
+    var subjectAreasUrl = "/dco-viz/statsJSON/subjectAreas.json";
     var theQueryResult;
     var subjectAreas = [];
 
@@ -136,7 +136,7 @@ function pubWordCloud(elementId,width,height) {
 // Publication counts by community
 function commPubCounts(elementId,width,height) {
 
-    var pubCountUrl = "dco-viz/statsJSON/communityPubCounts.json";
+    var pubCountUrl = "/dco-viz/statsJSON/communityPubCounts.json";
     var commNumbers = [];
     var commNames = [];
     var peopleCounts = [];
@@ -331,7 +331,7 @@ function commMemberCounts(elementId,width,height) {
     $.ajax({
     	dataType: "json",
         // url: "/dco-viz/statsJSON/dcoStats.json",
-        url: "dco-viz/statsJSON/communityMemberCounts1.json",
+        url: "/dco-viz/statsJSON/communityMemberCounts1.json",
         //url: 'https://info.deepcarbon.net/vivo/admin/sparqlquery?query=PREFIX+rdfs%3A++%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX+dco%3A+%3Chttp%3A%2F%2Finfo.deepcarbon.net%2Fschema%23%3E%0D%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+vivo%3A+%3Chttp%3A%2F%2Fvivoweb.org%2Fontology%2Fcore%23%3E%0D%0A%0D%0A%23This+query+gets+the+names+of+each+DCO+community+and+counts+the+number+of+users+in+%0D%0A%23each+community%0D%0ASELECT+%3Fdcocommname+%28COUNT%28%3Fuser%29+as+%3Fnumber%29+WHERE%0D%0A%7B%0D%0A++++%3Fuser+a+foaf%3APerson+.%0D%0A+++++%3Fuser+%3Chttp%3A%2F%2Fvivo.mydomain.edu%2Fns%23networkId%3E+%3FnetID+.%0D%0A+++++%3Fuser+obo%3ARO_0000053+%3Fcommrole+.%0D%0A+++++%3Fcommrole+a+vivo%3AMemberRole+.%0D%0A++++OPTIONAL+%7B+%3Fcommrole+vivo%3AdateTimeINterval+%3Finterval+.%0D%0A+++++++++++++++++++++++++%3Finterval+vivo%3Aend+%3Fend+.+%7D%0D%0A++++FILTER%28%21BOUND%28%3Fend%29%29%0D%0A++++%3Fcommrole+vivo%3AroleContributesTo+%3Fdco_community+.%0D%0A++++%3Fdco_community+a+dco%3AResearchCommunity+.%0D%0A++++%3Fdco_community+rdfs%3Alabel+%3Fdcocommname+.%0D%0A%7D%0D%0AGROUP+BY+%3Fdcocommname%0D%0A&resultFormat=RS_JSON&rdfResultFormat=RDF%2FXML-ABBREV',
     	success: function(data) {
             // theQueryResult = data.communityMemberCounts1;

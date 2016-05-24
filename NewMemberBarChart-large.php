@@ -51,15 +51,7 @@ global $n1w ;
 $ptr->close();
 ?>
 
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title> New Members Bar Chart </title>
-
   <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
-
-
-
 
   <link rel="stylesheet" type="text/css" href="/dco-viz/css/result-light.css">
 
@@ -136,15 +128,8 @@ $(function () {
 </script>
 
 
-</head>
-<body>
   <script src="//code.highcharts.com/highcharts.js"></script>
-<script src="//code.highcharts.com/modules/exporting.js"></script>
+  <script src="//code.highcharts.com/modules/exporting.js"></script>
 
-<div id="container" style="min-width: 310px; max-width: 500px; height: 255px; margin: 0 auto"></div>
+<div id="container" style="min-width: 500px; max-width: 800px; height: 500px; margin: 0 auto"></div>
 
-
-</body>
-
-
-</html>
