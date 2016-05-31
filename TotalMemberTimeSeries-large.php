@@ -32,15 +32,7 @@ $json .= "\n]" ;
 $ptr->close();
 ?>
 
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title> New Members Line Graph </title>
-
   <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
-
-
-
 
   <link rel="stylesheet" type="text/css" href="/dco-viz/css/result-light.css">
 
@@ -114,15 +106,8 @@ $(function () {
 </script>
 
 
-</head>
-<body>
+<script src="//code.highcharts.com/highcharts.js"></script>
+<script src="//code.highcharts.com/modules/exporting.js"></script>
 
-  <script src="//code.highcharts.com/highcharts.js"></script>
-  <script src="//code.highcharts.com/modules/exporting.js"></script>
+<div id="container" style="min-width: 500px; max-width: 800px; width: 800px; margin: 0 auto"></div>
 
-  <div id="container" style="min-width: 310px; width: 400px; height: 280px; margin: 0 auto"></div>
-
-</body>
-
-
-</html>
